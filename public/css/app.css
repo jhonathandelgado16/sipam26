@@ -1,0 +1,157 @@
+
+html, body {
+    background-color: rgb(236, 236, 236);
+
+    min-height: 100vh !important;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.card-login {
+    border-radius: 20px;
+    background-image: url('/storage/fundo-login.jpeg');
+    background-size: 100%;
+}
+
+.card-info-login {
+    height: 500px;
+}
+
+.btn-white {
+    background-color: white !important;
+    border: #001eff 1px solid;
+}
+
+.btn-white:hover {
+    border: #001eff 2px solid;
+}
+
+.btn-green {
+    background-color: white !important;
+    border: #1a4d19 1px solid;
+}
+
+.btn-green:hover {
+    border: #1a4d19 2px solid;
+}
+
+.btn-caderneta {
+    background-color: rgba(37,126,16,0.96) !important;
+    border: #1a4d19 1px solid;
+    padding: 0 !important;
+    height: 30px !important;
+    margin: auto;
+    color: #fff;
+}
+
+.btn-caderneta:hover {
+    border: #fff 2px solid;
+    color: #fff;
+    font-weight: bold;
+    background-color: rgba(37,126,16,0.96) !important;
+}
+
+.btn {
+    max-height: 40px !important;
+}
+
+.navbar {
+    background-color: #ffffff !important;
+    border-bottom: #004aad 4px solid;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #004aad !important;
+    border-color: #005bd3 !important;}
+
+.btn-primary:hover {
+    background-color: #023b85 !important;
+    border-color: #0149a8 !important;
+}
+
+footer{
+    margin-bottom: 0;
+    margin-top: auto !important;
+    background-color: #ffffff !important;
+    border-top: #004aad 4px solid;
+}
+
+.div-footer {
+    margin: 0.5rem;
+}
+
+.div-footer p {
+    font-size: 12px;
+    margin: 0 !important;
+}
+
+.form-search input {
+    width: 50%;
+}
+
+.title-caderneta {
+    background-color: #1a4d19;
+    color: #fff;
+    font-size: 30px;
+    border-radius: 0.3rem;
+    -webkit-box-shadow: 4px 4px 0px 2px rgba(37,126,16,0.96);
+    box-shadow: 4px 4px 0px 2px rgba(37,126,16,0.96);
+    margin-bottom: 5px;
+}
+
+.subtitle-caderneta {
+    background-color: #fff;
+    color: #1a4d19;
+    border: solid 1px #1a4d19;
+    font-size: 30px;
+    border-radius: 0.3rem;
+    -webkit-box-shadow: 4px 4px 0px 2px #1a4d19;
+    box-shadow: 4px 4px 0px 2px #1a4d19;
+}
+
+.card-fo {
+    background-color: #ffffff;
+    border-radius: 0.5rem;
+    padding: 5px;
+    border: solid 2px #1a4d19;
+}
+
+.card-fo h3 {
+    background-color: #1a4d19;
+    color: #fff;
+    font-size: 16px;
+    border-radius: 0.3rem;
+    -webkit-box-shadow: 4px 4px 0px 2px rgba(37,126,16,0.96);
+    box-shadow: 4px 4px 0px 2px rgba(37,126,16,0.96);
+}
+
+.card-fo h4 {
+    font-size: 14px;
+    font-family: "Courier New", Courier, monospace;
+    font-size: 14px;
+    letter-spacing: 0.2px;
+    word-spacing: 2px;
+    color: #000000;
+    font-weight: 400;
+    text-decoration: rgb(68, 68, 68);
+    font-style: normal;
+    font-variant: normal;
+    text-transform: none;
+}
+
+.margin-bottom-10 {
+    margin-bottom: 20px;
+}
+
+.margin-bottom-15 {
+    margin-bottom: 15px;
+}
+
+.margin-bottom-5 {
+    margin-bottom: 5px;
+}
