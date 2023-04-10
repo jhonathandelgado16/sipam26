@@ -39,6 +39,22 @@
             {!! Form::text('email', null, array('placeholder' => 'Email','class' => 'form-control')) !!}
         </div>
     </div>
+    <div class="col-6">
+        <strong>Subunidade:</strong>
+        <select name="subunidade_id" class="form-select">
+            @foreach ($subunidades as $key => $subunidade)
+                @if($user->subunidade_id == $subunidade->id)
+                    <option value="{{$subunidade->id}}" selected>
+                        {{$subunidade->nome}}
+                    </option>
+                @else
+                    <option value="{{$subunidade->id}}">
+                        {{$subunidade->nome}}
+                    </option>
+                @endif
+            @endforeach
+        </select>
+    </div>
     <div class="col-xs-12 col-sm-12 col-md-12">
         <div class="form-group">
             <strong>Password:</strong>
