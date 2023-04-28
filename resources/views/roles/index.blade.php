@@ -27,7 +27,7 @@
 @endif
 
 
-<table class="table table-bordered text-center">
+<table class="table text-center">
     <tr>
         <th>Nº</th>
         <th>Nome</th>

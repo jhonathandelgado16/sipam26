@@ -129,7 +129,7 @@
                 </div>
 
                 <div class="col-3">
-                    <strong>Identidade:</strong>
+                    <strong>Identidade Militar:</strong>
                     <input class="form-control" value="{{$militar->idt_militar}}" placeholder="Identidade" type="number" name="idt_militar" maxlength="11" minlength="11">
                 </div>
 
@@ -140,7 +140,7 @@
 
                 <div class="col-3">
                     <strong>Tipo Sanguíneo:</strong>
-                    <input class="form-control" placeholder="Ex: O-" type="text" name="tipo_sanguineo">
+                    <input class="form-control" placeholder="Ex: O-" value="{{$militar->tipo_sanguineo}}" type="text" name="tipo_sanguineo">
                 </div>
 
                 <div class="col-12">

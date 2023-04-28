@@ -33,17 +33,15 @@
 @endif
 
 
-<table class="table table-bordered">
+<table class="table">
     <tr>
-        <th>No</th>
-        <th>Name</th>
-        <th>Email</th>
-        <th>Roles</th>
-        <th width="280px">Action</th>
+        <th>Militar</th>
+        <th>Usuário</th>
+        <th>Nível de Acesso</th>
+        <th width="280px">Ações</th>
     </tr>
 @foreach ($data as $key => $user)
     <tr>
-        <td>{{ ++$i }}</td>
         <td>{{ $user->name }}</td>
         <td>{{ $user->email }}</td>
         <td>
@@ -55,16 +53,13 @@
         </td>
         @if($user_auth->hasRole('Admin'))
         <td>
-            <a class="btn btn-info" href="{{ route('users.show',$user->id) }}">Show</a>
-            <a class="btn btn-primary" href="{{ route('users.edit',$user->id) }}">Edit</a>
+            <a class="btn btn-white" href="{{ route('users.edit',$user->id) }}"><img src="{{url('storage/icons/edit.png')}}" height="20"> Editar</a>
                 {!! Form::open(['method' => 'DELETE','route' => ['users.destroy', $user->id],'style'=>'display:inline']) !!}
-                    {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}
+                    <button type="submit" class='btn btn-white'> <img src="{{url('storage/icons/delete.png')}}" height="20"> Deletar</button>
                 {!! Form::close() !!}
         </td>
         @endif
     </tr>
 @endforeach
 </table>
-
-{!! $data->render() !!}
 @endsection

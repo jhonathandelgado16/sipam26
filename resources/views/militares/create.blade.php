@@ -51,9 +51,14 @@
                     {!! Form::text('nome_de_guerra', null, array('placeholder' => 'Nome de Guerra','class' => 'form-control')) !!}
                 </div>
 
-                <div class="col-12">
+                <div class="col-8">
                     <strong>Nome:</strong>
                     {!! Form::text('nome', null, array('placeholder' => 'Nome','class' => 'form-control')) !!}
+                </div>
+
+                <div class="col-4">
+                    <strong>Data de Nascimento</strong>
+                    <input type="date" name="data_nascimento" class="form-control" id="">
                 </div>
 
                 <div class="col-6">
@@ -79,14 +84,19 @@
                 </div>
 
 
-                <div class="col-6">
+                <div class="col-4">
                     <strong>CPF:</strong>
-                    <input class="form-control" placeholder="CPF" type="number" name="cpf" maxlength="11" minlength="11">
+                    <input class="form-control" placeholder="CPF" type="number" name="cpf">
                 </div>
 
-                <div class="col-6">
-                    <strong>Identidade:</strong>
-                    <input class="form-control" placeholder="Identidade" type="number" name="idt_militar" maxlength="11" minlength="11">
+                <div class="col-4">
+                    <strong>Identidade Militar:</strong>
+                    <input class="form-control" placeholder="Identidade" type="number" name="idt_militar">
+                </div>
+
+                <div class="col-4">
+                    <strong>Tipo Sanguíneo:</strong>
+                    <input class="form-control" placeholder="Ex: O-" type="text" name="tipo_sanguineo">
                 </div>
 
                 <div class="col-12">

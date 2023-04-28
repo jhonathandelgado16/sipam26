@@ -4,10 +4,10 @@
 <div class="row">
     <div class="col-lg-12 margin-tb">
         <div class="pull-left">
-            <h2>Edit New User</h2>
+            <h2>Editar Usuário</h2>
         </div>
-        <div class="pull-right">
-            <a class="btn btn-primary" href="{{ route('users.index') }}"> Back</a>
+        <div class="pull-right col-6">
+            <a class="btn btn-white" href="{{ route('users.index') }}"><img src="{{url('storage/icons/back.png')}}" height="20"> Voltar</a>
         </div>
     </div>
 </div>
@@ -15,31 +15,29 @@
 
 @if (count($errors) > 0)
     <div class="alert alert-danger">
-        <strong>Whoops!</strong> There were some problems with your input.<br><br>
+        <strong>Barro!</strong> Temos um erro com as informações que você preencheu.<br><br>
         <ul>
             @foreach ($errors->all() as $error)
+            @if($error == 'validation.required')
+                <li>Por favor preencha as informações necessárias</li>
+            @else
                 <li>{{ $error }}</li>
+            @endif
             @endforeach
         </ul>
     </div>
 @endif
 
 
-{!! Form::model($user, ['method' => 'PATCH','route' => ['users.update', $user->id]]) !!}
-<div class="row">
-    <div class="col-xs-12 col-sm-12 col-md-12">
+{!! Form::model($user, ['method' => 'PATCH', 'class' => 'justify-content-center row', 'route' => ['users.update', $user->id]]) !!}
+<div class="col-10 row">
+    <div class="col-6">
         <div class="form-group">
-            <strong>Name:</strong>
+            <strong>Nome:</strong>
             {!! Form::text('name', null, array('placeholder' => 'Name','class' => 'form-control')) !!}
         </div>
     </div>
-    <div class="col-xs-12 col-sm-12 col-md-12">
-        <div class="form-group">
-            <strong>Email:</strong>
-            {!! Form::text('email', null, array('placeholder' => 'Email','class' => 'form-control')) !!}
-        </div>
-    </div>
-    <div class="col-6">
+    <div class="col-2">
         <strong>Subunidade:</strong>
         <select name="subunidade_id" class="form-select">
             @foreach ($subunidades as $key => $subunidade)
@@ -55,30 +53,36 @@
             @endforeach
         </select>
     </div>
-    <div class="col-xs-12 col-sm-12 col-md-12">
+    <div class="col-3">
         <div class="form-group">
-            <strong>Password:</strong>
-            {!! Form::password('password', array('placeholder' => 'Password','class' => 'form-control')) !!}
+            <strong>Nível de Acesso:</strong>
+            {!! Form::select('roles[]', $roles,$userRole, array('class' => 'form-select')) !!}
         </div>
     </div>
-    <div class="col-xs-12 col-sm-12 col-md-12">
+
+    <div class="col-4">
         <div class="form-group">
-            <strong>Confirm Password:</strong>
-            {!! Form::password('confirm-password', array('placeholder' => 'Confirm Password','class' => 'form-control')) !!}
+            <strong>Email Login:</strong>
+            {!! Form::text('email', null, array('placeholder' => 'Email','class' => 'form-control')) !!}
         </div>
     </div>
-    <div class="col-xs-12 col-sm-12 col-md-12">
+    <div class="col-4">
         <div class="form-group">
-            <strong>Role:</strong>
-            {!! Form::select('roles[]', $roles,$userRole, array('class' => 'form-control','multiple')) !!}
+            <strong>Senha:</strong>
+            {!! Form::password('password', array('placeholder' => 'Senha','class' => 'form-control')) !!}
         </div>
     </div>
+    <div class="col-4">
+        <div class="form-group">
+            <strong>Confirme a Senha:</strong>
+            {!! Form::password('confirm-password', array('placeholder' => 'Confirme a Senha','class' => 'form-control')) !!}
+        </div>
+    </div>     
+   
     <div class="col-xs-12 col-sm-12 col-md-12 text-center">
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary">Concluir</button>
     </div>
 </div>
 {!! Form::close() !!}
 
-
-<p class="text-center text-primary"><small>Tutorial by Mywebtuts.com</small></p>
 @endsection

@@ -22,9 +22,8 @@ class UserController extends Controller
     public function index(Request $request)
     {
         $user_auth = Auth::user();
-        $data = User::orderBy('id','DESC')->paginate(5);
-        return view('users.index',compact('data','user_auth'))
-            ->with('i', ($request->input('page', 1) - 1) * 5);
+        $data = User::orderBy('id','DESC')->get();
+        return view('users.index',compact('data','user_auth'));
     }
 
     /**
@@ -58,7 +57,7 @@ class UserController extends Controller
         $user->assignRole($request->input('roles'));
 
         return redirect()->route('users.index')
-                        ->with('success','User created successfully');
+                        ->with('success','Usuário criado com sucesso');
     }
 
     /**
@@ -113,18 +112,15 @@ class UserController extends Controller
             $input = Arr::except($input,array('password'));
         }
 
-        
         $user = User::find($id);
         $user->update($input);
-        var_dump($input);
-        /*
+        
         DB::table('model_has_roles')->where('model_id',$id)->delete();
 
         $user->assignRole($request->input('roles'));
 
         return redirect()->route('users.index')
-                        ->with('success','User updated successfully');
-                        */
+                        ->with('success','Usuário atualizado com sucesso');
     }
 
     /**
