@@ -67,7 +67,8 @@ body {
 .btn-primary {
     color: #fff;
     background-color: #004aad !important;
-    border-color: #005bd3 !important;}
+    border-color: #005bd3 !important;
+}
 
 .btn-primary:hover {
     background-color: #023b85 !important;

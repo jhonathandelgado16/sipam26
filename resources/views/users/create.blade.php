@@ -40,6 +40,16 @@
         </div>
     </div>
     <div class="col-xs-12 col-sm-12 col-md-12">
+            <strong>Subunidade:</strong>
+            <select name="subunidade_id" class="form-control">
+                @foreach ($subunidades as $key => $subunidade)
+                <option value="{{$subunidade->id}}">
+                    {{$subunidade->nome}}
+                </option>
+                @endforeach
+            </select>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-12">
         <div class="form-group">
             <strong>Senha:</strong>
             {!! Form::password('password', array('placeholder' => 'Password','class' => 'form-control')) !!}
