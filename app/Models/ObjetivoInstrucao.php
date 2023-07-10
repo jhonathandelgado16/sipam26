@@ -12,7 +12,8 @@ class ObjetivoInstrucao extends Model
     protected $fillable = [
         'identificacao',
         'materia',
-        'referencia'];
+        'referencia',
+        'dentro_da_fiib'];
 
     public function getOII(){
         return $this->materia . ' '. $this->identificacao;

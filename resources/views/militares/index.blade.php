@@ -9,12 +9,35 @@
         </div>
         <div class="col-lg-12 margin-tb">
             <div class="row">
-                <div class="pull-right col-8">
-                    <form action="{{ route('militares.procurar') }}" method="GET" class="form-search col-10 row">
+                <div class="col-4">
+                    <form action="{{ route('militares.procurar') }}" method="GET" class="form-search col-12 row">
                         <input type="text" name="search" placeholder="Pesquise por nome ou número" value="{{$search}}" class="col-8 form-control"/>
-                        <button type="submit" class="btn btn-primary col-2">Procurar</button>
+                        <button type="submit" class="btn btn-primary col-4">Procurar</button>
                     </form>
                 </div>
+                @can('admin')
+                <div class="col-4">
+                    <form action="{{ route('militares.procurar_subunidade') }}" method="GET" class="row">
+                        <div class="row">
+                        <select name="subunidade_id" class="form-select select-search col-8">
+                            <option value="">Pesquisa por SU</option>
+                            @foreach ($subunidades as $key => $subunidade)
+                            @if($search_su == $subunidade->id)
+                                <option value="{{$subunidade->id}}" selected>
+                                    {{$subunidade->nome}}
+                                </option>
+                            @else
+                                <option value="{{$subunidade->id}}">
+                                    {{$subunidade->nome}}
+                                </option>
+                            @endif
+                            @endforeach
+                        </select>
+                        <button type="submit" class="btn btn-primary col-4">Procurar</button>
+                    </div>
+                    </form>
+                </div>
+                @endcan
                 <div class="row justify-content-end col-4">
                     @can('militar-create')
                         <a class="col-7 btn btn-primary" href="{{ route('militares.create') }}"> Cadastrar Militar</a>
@@ -52,9 +75,7 @@
                 <a class="btn btn-white" href="{{ route('militares.edit', $militar->id) }}"><img src="{{url('storage/icons/edit.png')}}" height="20"> Editar</a>
             @endcan
             @can('militar-caderneta')
-            @if ($militar->posto->posto == 'Sd Ev')
             <a class="btn btn-green" href="{{ route('caderneta.ficha' , $militar->id) }}"><img src="{{url('storage/icons/caderneta.png')}}" height="20"> Caderneta</a>
-            @endif
             @endcan
         </td>
     </tr>

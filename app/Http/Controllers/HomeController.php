@@ -34,7 +34,9 @@ class HomeController extends Controller
     public function index()
     {
         $search = '';
+        $search_su = '';
         $user_auth = Auth::user();
+        $subunidades = Subunidade::all();
         $user = User::findOrFail($user_auth->id);
         if (Auth::user()->hasRole('Admin')) {
             $militares = Militar::all();
@@ -42,6 +44,6 @@ class HomeController extends Controller
             $militares = Militar::where('subunidade_id', $user->subunidade_id)->get();
         }
 
-        return view('militares.index',compact('user_auth', 'militares', 'search'));
+        return view('militares.index',compact('user_auth', 'militares', 'subunidades', 'search', 'search_su'));
     }
 }

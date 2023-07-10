@@ -16,6 +16,10 @@
             <a class="btn btn-primary col-3" href="{{ route('medicos.index') }}"> Gerenciar Médicos</a>
             <a class="btn btn-primary col-3" href="{{ route('vacinas.index') }}"> Gerenciar Vacinas</a>
             <a class="btn btn-primary col-3" href="{{ route('objetivos_instrucoes.index') }}"> Gerenciar OII</a>
+            <a class="btn btn-primary col-3" href="{{ route('fiib.definir') }}"> Gerenciar FIIB</a>
+            <a class="btn btn-primary col-3" href="{{ route('categorias_avaliacoes.index') }}"> Gerenciar Categorias de Avaliações</a>
+            <a class="btn btn-primary col-3" href="{{ route('categorias_atributos.index') }}"> Gerenciar Categorias de Atributos</a>
+            <a class="btn btn-primary col-3" href="{{ route('atributos.index') }}"> Gerenciar Atributos</a>
         </div>
     </div>
 </div>

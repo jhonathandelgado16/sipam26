@@ -35,10 +35,35 @@ class ObjetivoInstrucaoController extends Controller
             'referencia' => 'required',
         ]);
 
-        $objetivo_intrucao = ObjetivoInstrucao::create(['identificacao' => $request->input('identificacao'), 'materia' => $request->input('materia'), 'referencia' => $request->input('referencia')]);
+        $objetivo_instrucao = ObjetivoInstrucao::create(['identificacao' => $request->input('identificacao'), 'materia' => $request->input('materia'), 'referencia' => $request->input('referencia')]);
 
         return redirect()->route('objetivos_instrucoes.index')
                         ->with('success','Objetivo Individual da Instrução cadastrado com sucesso!');
+    }
+
+    public function edit($id)
+    {
+        $objetivo_instrucao = ObjetivoInstrucao::find($id);
+
+        return view('objetivos_instrucoes.edit',compact('objetivo_instrucao'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $this->validate($request, [
+            'identificacao' => 'required',
+            'materia' => 'required',
+            'referencia' => 'required',
+        ]);
+
+        $objetivo_instrucao = ObjetivoInstrucao::find($id);
+        $objetivo_instrucao->identificacao = $request->input('identificacao');
+        $objetivo_instrucao->materia = $request->input('materia');
+        $objetivo_instrucao->referencia = $request->input('referencia');
+        $objetivo_instrucao->save();
+
+        return redirect()->route('objetivos_instrucoes.index')
+                        ->with('success','Objetivo Individual da Instrução atualizado com Sucesso!');
     }
 }
 
