@@ -1,6 +1,5 @@
 @extends('layouts.app')
 
-
 @section('content')
 <div class="row">
     <div class="col-lg-12 margin-tb">
@@ -26,18 +25,24 @@
 @endif
 
 
-{!! Form::model($subunidade, ['method' => 'PATCH','route' => ['subunidades.update', $subunidade->id]]) !!}
+{!! Form::model($objetivo_instrucao, ['method' => 'PATCH','route' => ['objetivos_instrucoes.update', $objetivo_instrucao->id]]) !!}
 <div class="row">
     <div class="col-xs-12 col-sm-12 col-md-12">
-        <div class="form-group">
-            <strong>Nome:</strong>
-            {!! Form::text('nome', null, array('placeholder' => 'Nome','class' => 'form-control')) !!}
-        </div>
-    </div>
-    <div class="col-xs-12 col-sm-12 col-md-12">
-        <div class="form-group">
-            <strong>Cmt Subunidade:</strong>
-            {!! Form::text('cmt_subunidade', null, array('placeholder' => 'Cmt Subunidade','class' => 'form-control')) !!}
+        <div class="form-group row justify-content-center">
+            <div class="col-2">
+                <strong>Matéria:</strong>
+                {!! Form::text('materia', null, array('placeholder' => 'Ex: 1.','class' => 'form-control col-3')) !!}
+            </div>
+
+            <div class="col-2">
+                <strong>Identificacao:</strong>
+                {!! Form::text('identificacao', null, array('placeholder' => 'Ex: B-101','class' => 'form-control col-3')) !!}
+            </div>
+
+            <div class="col-4">
+                <strong>Referência:</strong>
+                {!! Form::text('referencia', null, array('placeholder' => 'Ex: EB70-PP-11.011','class' => 'form-control')) !!}
+            </div>
         </div>
     </div>
     <div class="col-xs-12 col-sm-12 col-md-12 text-center">

@@ -20,7 +20,9 @@ class Militar extends Model
         'responsavel',
         'subunidade_id',
         'posto_id',
-        'pelotao_id'
+        'pelotao_id',
+        'tipo_sanguineo',
+        'data_nascimento'
     ];
 
     public function subunidade(){
@@ -41,5 +43,33 @@ class Militar extends Model
 
     public function getDataFormatada(){
         return implode("/",array_reverse(explode("-",$this->data_nascimento)));
+    }
+
+    public function possuiFiibPreenchida(){
+        $resultado = FichaIndividualBasica::where('militar_id', $this->id)->get();
+        if($resultado->isNotEmpty()){
+            return true;
+        }
+        return false;
+    }
+
+    public function getOperador(){
+        return User::where('subunidade_id', $this->subunidade_id)->where('email', 'like', 'operador%')->first();
+    }
+
+    public function getInformacoesFaat(){
+        return FichaAvaliacaoAtributo::where('militar_id', $this->id)->first();
+    }
+
+    public function getInformacoesFiib(){
+        return FichaIndividualBasica::select('objetivo_instrucao_id', 'padrao_minimo_atingido', 'militar_id')->join('objetivo_instrucaos', 'objetivo_instrucaos.id', '=', 'ficha_individual_basicas.objetivo_instrucao_id')->where('militar_id', $this->id)->orderByRaw('CONVERT(materia, SIGNED) asc')->orderBy('identificacao','asc')->get();
+    }
+
+    public function possuiFaatPreenchida(){
+        $resultado = FichaAvaliacaoAtributo::where('militar_id', $this->id)->get();
+        if($resultado->isNotEmpty()){
+            return true;
+        }
+        return false;
     }
 }

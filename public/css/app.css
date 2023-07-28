@@ -1,7 +1,6 @@
 
 html, body {
     background-color: rgb(236, 236, 236);
-
     min-height: 100vh !important;
 }
 
@@ -65,6 +64,7 @@ body {
 }
 
 .btn-primary {
+    margin-top: 3px;
     color: #fff;
     background-color: #004aad !important;
     border-color: #005bd3 !important;
@@ -92,16 +92,16 @@ footer{
 }
 
 .form-search input {
-    width: 50%;
+    width: 60%;
 }
 
 .title-caderneta {
     background-color: #1a4d19;
     color: #fff;
-    font-size: 30px;
+    font-size: medium;
     border-radius: 0.3rem;
-    -webkit-box-shadow: 4px 4px 0px 2px rgba(37,126,16,0.96);
-    box-shadow: 4px 4px 0px 2px rgba(37,126,16,0.96);
+    -webkit-box-shadow: 2px 2px 0px 1px rgba(37,126,16,0.96);
+    box-shadow: 2px 2px 0px 1px rgba(37,126,16,0.96);
     margin-bottom: 5px;
 }
 
@@ -109,10 +109,14 @@ footer{
     background-color: #fff;
     color: #1a4d19;
     border: solid 1px #1a4d19;
-    font-size: 30px;
+    font-size: medium;
     border-radius: 0.3rem;
     -webkit-box-shadow: 4px 4px 0px 2px #1a4d19;
     box-shadow: 4px 4px 0px 2px #1a4d19;
+}
+
+.title-caderneta h2 {
+    font-size: medium;
 }
 
 .card-fo {
@@ -134,7 +138,7 @@ footer{
 .card-fo h4 {
     font-size: 14px;
     font-family: "Courier New", Courier, monospace;
-    font-size: 14px;
+    font-size: small;
     letter-spacing: 0.2px;
     word-spacing: 2px;
     color: #000000;
@@ -155,4 +159,100 @@ footer{
 
 .margin-bottom-5 {
     margin-bottom: 5px;
+}
+
+.select-search {
+    width: 60% !important;
+}
+
+.table-fiib {
+    background-color: #fff;
+    border: #001eff 2px solid !important;
+    border-radius: 5% !important;
+    padding: 3px !important;
+    min-height: 80%;
+}
+
+.table-fiib tr {
+    background-color: #fff !important;
+    margin: 3px !important;
+    border: #001eff solid 1px !important;
+    max-height: 30px;
+}
+
+.card-001eff {
+    margin-top: 10px;
+    border-radius: 15px;
+    background-color: #001eff !important;
+    padding: 10px;
+    height: 800px;
+}
+
+.card-fff {
+    background-color: #fff !important;
+    overflow-y: scroll;
+}
+
+.item-oii {
+    background-color: #fff;
+    margin: 1px;
+    padding: 5px;
+    border-radius: 10px;
+}
+
+.item-oii-001eff {
+    background-color: #001eff;
+    color: #fff;
+    margin: 1px;
+    padding: 5px;
+    border-radius: 10px;
+}
+
+.btn-check:checked {
+    border: #1a4d19 1px solid !important;
+    background-color: #fff !important;
+    color: #1a4d19 !important; 
+}
+
+.fiib-thead {
+    background-color: #1a4d19;
+    color: #fff;
+    font-size: x-small;
+}
+
+.color-red {
+    color: rgb(202, 6, 6);
+}
+
+.color-green {
+    color: rgba(37,126,16,0.96)
+}
+
+.radio-check {
+    border: #e6e6e6 0.5px solid;
+}
+
+.scroll-y{
+    overflow-y:scroll;
+    height: 100%;
+}
+
+.font-small {
+    font-size: small !important;
+}
+
+.font-medium{
+    font-size: medium;
+}
+
+.font-x-small {
+    font-size: x-small !important;
+}
+
+table {
+    font-size: small;
+}
+
+.btn {
+    font-size: small;
 }

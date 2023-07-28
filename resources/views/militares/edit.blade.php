@@ -135,7 +135,7 @@
 
                 <div class="col-3">
                     <strong>Data de Nascimento:</strong>
-                    <input class="form-control" placeholder="" type="date" name="data_nascimento" value="{{date('Y-m-d')}}">
+                    <input class="form-control" placeholder="" type="date" name="data_nascimento" value="{{$militar->data_nascimento}}">
                 </div>
 
                 <div class="col-3">

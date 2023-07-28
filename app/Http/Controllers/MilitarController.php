@@ -29,37 +29,56 @@ class MilitarController extends Controller
     public function index(Request $request)
     {
         $search = '';
+        $search_su = '';
+        $subunidades = Subunidade::all();
         $user_auth = Auth::user();
         $user = User::findOrFail($user_auth->id);
         if (Auth::user()->hasRole('Admin')) {
-            $militares = Militar::all();
+            $militares = Militar::select('militars.id', 'numero', 'nome_de_guerra', 'posto_id', 'antiguidade')->join('postos', 'militars.posto_id', '=', 'postos.id')->
+            orderBy('antiguidade', 'ASC')->get();   
         } else {
-            $militares = Militar::where('subunidade_id', $user->subunidade_id)->get();
+            $militares = Militar::Select('militars.id', 'numero', 'nome_de_guerra', 'posto_id', 'antiguidade')->join('postos', 'militars.posto_id', '=', 'postos.id')->
+            orderBy('antiguidade', 'ASC')->orderBy('numero')->where('subunidade_id', $user->subunidade_id)->get();
         }
 
-        return view('militares.index',compact('user_auth', 'militares', 'search'));
+        return view('militares.index',compact('user_auth', 'militares', 'subunidades', 'search', 'search_su'));
     }
     public function procurar(Request $request)
     {
         $search = $request->input('search');
         $user_auth = Auth::user();
+        $search_su = '';
 
+        $subunidades = Subunidade::all();
 
         $user = User::findOrFail($user_auth->id);
         if (Auth::user()->hasRole('Admin')) {
-            $militares = Militar::where('nome', 'LIKE', "%{$search}%")
-            ->orWhere('numero', 'LIKE', "%{$search}%")
+            $militares = Militar::where('nome_de_guerra', 'LIKE', "%{$search}%")
+            ->orWhere('numero', 'LIKE', "%{$search}%")->orderBy('numero')
             ->get();
         } else {
-            $militares = Militar::where('subunidade_id', $user->subunidade_id)->orWhere('nome', 'LIKE', "%{$search}%")
-            ->orWhere('numero', 'LIKE', "%{$search}%")
+            $militares = Militar::where('subunidade_id', $user->subunidade_id)->orWhere('nome_de_guerra', 'LIKE', "%{$search}%")
+            ->orWhere('numero', 'LIKE', "%{$search}%")->orderBy('numero')
             ->get();
 
-            $militares = Militar::whereRaw('(nome LIKE "%'.$search.'%" OR numero LIKE "%'.$search.'%") and subunidade_id = '.$user->subunidade_id.'')->get();
+            $militares = Militar::whereRaw('(nome_de_guerra LIKE "%'.$search.'%" OR numero LIKE "%'.$search.'%") and subunidade_id = '.$user->subunidade_id.'')->orderBy('numero')->get();
         }
 
 
-        return view('militares.index',compact('user_auth', 'militares', 'search'));
+        return view('militares.index',compact('user_auth', 'militares', 'subunidades', 'search', 'search_su'));
+    }
+
+    public function procurarPorSu(Request $request)
+    {
+        $su = $request->input('subunidade_id');
+        $user_auth = Auth::user();
+        $search = "";
+        $search_su = $su;
+        $subunidades = Subunidade::all();
+
+        $militares = Militar::select('militars.id', 'numero', 'nome_de_guerra', 'posto_id', 'antiguidade')->where('subunidade_id', $su)->join('postos', 'militars.posto_id', '=', 'postos.id')->
+            orderBy('antiguidade', 'ASC')->orderBy('numero')->get();        
+        return view('militares.index',compact('user_auth', 'militares', 'su', 'search', 'subunidades', 'search_su'));
     }
 
     public function criar()
@@ -83,11 +102,10 @@ class MilitarController extends Controller
         $this->validate($request, [
             'nome' => 'required',
             'nome_de_guerra' => 'required',
-            'numero' => 'required',
             'cpf' => 'required',
             'endereco' => 'required',
             'contato' => 'required',
-            'responsavel' => 'required',
+            //'responsavel' => 'required',
             'posto_id' => 'required',
             'pelotao_id' => 'required',
             'subunidade_id' => 'required',
@@ -119,11 +137,11 @@ class MilitarController extends Controller
         $this->validate($request, [
             'nome' => 'required',
             'nome_de_guerra' => 'required',
-            'numero' => 'required',
+            //'numero' => 'required',
             'cpf' => 'required',
             'endereco' => 'required',
             'contato' => 'required',
-            'responsavel' => 'required',
+            //'responsavel' => 'required',
             'situacao' => 'required',
             'posto_id' => 'required',
             'pelotao_id' => 'required',
