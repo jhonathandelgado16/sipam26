@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Atributo;
 use App\Models\CategoriaAtributo;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AtributoController extends Controller
 {
@@ -18,6 +19,7 @@ class AtributoController extends Controller
     public function index()
     {
         //
+        $user_auth = Auth::user();
         $atributos = Atributo::all();
         return view('atributos.index', compact('atributos'));
     }
@@ -28,6 +30,7 @@ class AtributoController extends Controller
     public function create()
     {
         //
+        $user_auth = Auth::user();
         $categorias_atributos = CategoriaAtributo::all();
         return view('atributos.create', compact('categorias_atributos'));
     }
@@ -38,6 +41,7 @@ class AtributoController extends Controller
     public function store(Request $request)
     {
         //
+        $user_auth = Auth::user();
         $this->validate($request, [
             'nome' => 'required',
             'categoria_atributo_id' => 'required',
@@ -64,6 +68,7 @@ class AtributoController extends Controller
     public function edit(string $id)
     {
         //
+        $user_auth = Auth::user();
         $atributo = Atributo::find($id);
         $categorias_atributos = CategoriaAtributo::all();
         return view('atributos.edit', compact('categorias_atributos', 'atributo'));
@@ -75,6 +80,7 @@ class AtributoController extends Controller
     public function update(Request $request, string $id)
     {
         //
+        $user_auth = Auth::user();
         $this->validate($request, [
             'nome' => 'required',
             'categoria_atributo_id' => 'required',

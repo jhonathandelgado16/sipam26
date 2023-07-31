@@ -23,18 +23,21 @@ class CategoriaAvaliacaoController extends Controller
 
     public function index()
     {
+        $user_auth = Auth::user();
         $categorias_avaliacoes = CategoriaAvaliacao::all();
         return view('categorias_avaliacoes.index', compact('categorias_avaliacoes'));
     }
 
     public function create()
     {
+        $user_auth = Auth::user();
         $postos = Posto::orderBy('antiguidade', 'asc')->get();
         return view('categorias_avaliacoes.create', compact('postos'));
     }
 
     public function store(Request $request)
     {
+        $user_auth = Auth::user();
         $this->validate($request, [
             'nome' => 'required',
         ]);
@@ -55,6 +58,7 @@ class CategoriaAvaliacaoController extends Controller
 
     public function edit($id)
     {
+        $user_auth = Auth::user();
         $categoria_avaliacao = CategoriaAvaliacao::find($id);
         $postos = Posto::orderBy('antiguidade', 'asc')->get();
 
@@ -63,6 +67,7 @@ class CategoriaAvaliacaoController extends Controller
 
     public function update(Request $request, $id)
     {
+        $user_auth = Auth::user();
         $this->validate($request, [
             'nome' => 'required',
         ]);

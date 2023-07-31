@@ -75,7 +75,7 @@
                 <a class="btn btn-white" href="{{ route('militares.edit', $militar->id) }}"><img src="{{url('storage/icons/edit.png')}}" height="20"> Editar</a>
             @endcan
             @can('militar-caderneta')
-            <a class="btn btn-green" href="{{ route('caderneta.ficha' , $militar->id) }}"><img src="{{url('storage/icons/caderneta.png')}}" height="20"> Caderneta</a>
+                <a class="btn btn-green" href="{{ route('caderneta.ficha' , $militar->id) }}"><img src="{{url('storage/icons/caderneta.png')}}" height="20"> Caderneta</a>
             @endcan
         </td>
     </tr>

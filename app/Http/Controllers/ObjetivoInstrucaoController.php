@@ -23,12 +23,14 @@ class ObjetivoInstrucaoController extends Controller
 
     public function create()
     {
+        $user_auth = Auth::user();
         return view('objetivos_instrucoes.create');
     }
 
 
     public function store(Request $request)
     {
+        $user_auth = Auth::user();
         $this->validate($request, [
             'identificacao' => 'required',
             'materia' => 'required',
@@ -43,6 +45,7 @@ class ObjetivoInstrucaoController extends Controller
 
     public function edit($id)
     {
+        $user_auth = Auth::user();
         $objetivo_instrucao = ObjetivoInstrucao::find($id);
 
         return view('objetivos_instrucoes.edit',compact('objetivo_instrucao'));
@@ -50,6 +53,7 @@ class ObjetivoInstrucaoController extends Controller
 
     public function update(Request $request, $id)
     {
+        $user_auth = Auth::user();
         $this->validate($request, [
             'identificacao' => 'required',
             'materia' => 'required',

@@ -2,15 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\CategoriaAtributo;
+use App\Models\Escolaridade;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class CategoriaAtributoController extends Controller
+class EscolaridadeController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    //
     function __construct()
     {
         $this->middleware('permission:admin', ['only' => ['index', 'store', 'create']]);
@@ -19,8 +17,8 @@ class CategoriaAtributoController extends Controller
     public function index()
     {
         $user_auth = Auth::user();
-        $categorias_atributos = CategoriaAtributo::all();
-        return view('categorias_atributos.index', compact('categorias_atributos'));
+        $escolaridades = Escolaridade::all();
+        return view('escolaridades.index', compact('escolaridades'));
     }
 
     /**
@@ -29,7 +27,7 @@ class CategoriaAtributoController extends Controller
     public function create()
     {
         $user_auth = Auth::user();
-        return view('categorias_atributos.create');
+        return view('escolaridades.create');
     }
 
     /**
@@ -41,14 +39,14 @@ class CategoriaAtributoController extends Controller
         $user_auth = Auth::user();
         $this->validate($request, [
             'nome' => 'required',
-            'peso' => 'required',
+            'pontos' => 'required',
         ]);
 
-        CategoriaAtributo::create(['nome' => $request->input('nome'), 'peso' => $request->input('peso')]);
+        Escolaridade::create(['nome' => $request->input('nome'), 'pontos' => $request->input('pontos')]);
 
         return redirect()
-            ->route('categorias_atributos.index')
-            ->with('success', 'Categoria de Atributos cadastrada com sucesso!');
+            ->route('escolaridades.index')
+            ->with('success', 'Escolaridade cadastrada com sucesso!');
     }
     /**
      * Show the form for editing the specified resource.
@@ -57,9 +55,9 @@ class CategoriaAtributoController extends Controller
     {
         //
         $user_auth = Auth::user();
-        $categoria_atributo = CategoriaAtributo::find($id);
+        $escolaridade = Escolaridade::find($id);
 
-        return view('categorias_atributos.edit', compact('categoria_atributo'));
+        return view('escolaridades.edit', compact('escolaridade'));
     }
 
     /**
@@ -71,19 +69,17 @@ class CategoriaAtributoController extends Controller
         $user_auth = Auth::user();
         $this->validate($request, [
             'nome' => 'required',
-            'peso' => 'required',
-            'status' => 'required',
+            'pontos' => 'required',
         ]);
 
-        $categoria_atributo = CategoriaAtributo::find($id);
-        $categoria_atributo->nome = $request->input('nome');
-        $categoria_atributo->status = $request->input('status');
-        $categoria_atributo->peso = $request->input('peso');
-        $categoria_atributo->save();
+        $escolaridade = Escolaridade::find($id);
+        $escolaridade->nome = $request->input('nome');
+        $escolaridade->pontos = $request->input('pontos');
+        $escolaridade->save();
 
         return redirect()
-            ->route('categorias_atributos.index')
-            ->with('success', 'Categoria de Atributos atualizada com Sucesso!');
+            ->route('escolaridades.index')
+            ->with('success', 'Escolaridade atualizada com Sucesso!');
     }
 
     /**

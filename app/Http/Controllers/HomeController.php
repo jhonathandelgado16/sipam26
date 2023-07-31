@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Fracao;
 use App\Models\Militar;
+use App\Models\MilitaresFracao;
 use App\Models\Pelotao;
 use App\Models\Posto;
 use App\Models\Subunidade;
@@ -40,6 +42,9 @@ class HomeController extends Controller
         $user = User::findOrFail($user_auth->id);
         if (Auth::user()->hasRole('Admin')) {
             $militares = Militar::all();
+        } elseif(Auth::user()->hasRole('Cmt Fração')) {
+            $militares = Militar::Select('militars.id', 'numero', 'nome_de_guerra', 'posto_id', 'antiguidade')->join('postos', 'militars.posto_id', '=', 'postos.id')->
+            orderBy('antiguidade', 'ASC')->orderBy('numero')->whereIn('militars.id', MilitaresFracao::select('militar_id')->whereIn('fracao_id', (Fracao::select('id')->where('user_id', $user->id)->get()->toArray()))->get()->toArray())->get();
         } else {
             $militares = Militar::where('subunidade_id', $user->subunidade_id)->get();
         }

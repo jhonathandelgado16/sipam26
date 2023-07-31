@@ -20,6 +20,9 @@
             <a class="btn btn-primary col-3" href="{{ route('categorias_avaliacoes.index') }}"> Gerenciar Categorias de Avaliações</a>
             <a class="btn btn-primary col-3" href="{{ route('categorias_atributos.index') }}"> Gerenciar Categorias de Atributos</a>
             <a class="btn btn-primary col-3" href="{{ route('atributos.index') }}"> Gerenciar Atributos</a>
+            <a class="btn btn-primary col-3" href="{{ route('fracoes.index') }}"> Gerenciar Frações</a>
+            <a class="btn btn-primary col-3" href="{{ route('militares_fracoes.index') }}"> Definir Militares das Frações</a>
+            <a class="btn btn-primary col-3" href="{{ route('escolaridades.index') }}"> Definir Escolaridades</a>
         </div>
     </div>
 </div>
