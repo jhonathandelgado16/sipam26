@@ -5,14 +5,20 @@ namespace App\Http\Controllers;
 use App\Models\Fracao;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class FracaoController extends Controller
 {
+    function __construct()
+    {
+         $this->middleware('permission:admin', ['only' => ['index','store', 'create', 'update']]);
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {        
+        $user_auth = Auth::user();
         $fracoes = Fracao::all();
         return view('fracoes.index', compact('fracoes'));
     }
@@ -22,6 +28,7 @@ class FracaoController extends Controller
      */
     public function create()
     {
+        $user_auth = Auth::user();
         $users = User::whereHas(
             'roles', function($q){
                 $q->where('name', 'Cmt Fração');
@@ -37,6 +44,7 @@ class FracaoController extends Controller
     public function store(Request $request)
     {
         //
+        $user_auth = Auth::user();
         $this->validate($request, [
             'nome' => 'required',
             'user_id' => 'required',
@@ -62,7 +70,14 @@ class FracaoController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $user_auth = Auth::user();
+        $fracao = Fracao::find($id);
+        $users = User::whereHas(
+            'roles', function($q){
+                $q->where('name', 'Cmt Fração');
+            }
+        )->get();
+        return view('fracoes.edit', compact('users', 'fracao'));
     }
 
     /**
@@ -70,7 +85,22 @@ class FracaoController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $user_auth = Auth::user();
+        $this->validate($request, [
+            'nome' => 'required',
+            'user_id' => 'required',
+            'status' => 'required'
+        ]);
+
+        $fracao = Fracao::find($id);
+        $fracao->nome = $request->input('nome');
+        $fracao->user_id = $request->input('user_id');
+        $fracao->status = $request->input('status');
+        $fracao->save();
+        
+        return redirect()
+            ->route('fracoes.index')
+            ->with('success', 'Fração atualizada com Sucesso!');
     }
 
     /**

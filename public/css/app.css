@@ -256,3 +256,92 @@ table {
 .btn {
     font-size: small;
 }
+
+.scroll-y-400 {
+    max-height: 400px;
+    overflow-y: scroll;
+}
+
+.btn-pass {
+    height: 60px !important;
+}
+
+.card-sipam {
+    background-color: #ffffff;
+    border-radius: 0.5rem;
+    padding: 5px;
+}
+
+.card-sipam h3 {
+    background-color: #010f79;
+    color: #fff;
+    font-size: 16px;
+    border-radius: 0.3rem;
+    -webkit-box-shadow: 4px 4px 0px 2px #004aad;;
+    box-shadow: 4px 4px 0px 2px #004aad;;
+}
+
+.card-sipam h4 {
+    font-size: 14px;
+    font-size: small;
+    letter-spacing: 0.2px;
+    word-spacing: 2px;
+    color: #000000;
+    font-weight: 400;
+    text-decoration: rgb(68, 68, 68);
+    font-style: normal;
+    font-variant: normal;
+    text-transform: none;
+}
+
+.title-sipam {
+    background-color: #010f79;
+    color: #fff;
+    font-size: medium;
+    border-radius: 0.3rem;
+    -webkit-box-shadow: 2px 2px 0px 1px #004aad;
+    box-shadow: 2px 2px 0px 1px #004aad;
+    margin-bottom: 5px;
+}
+
+.subtitle-sipam {
+    background-color: #fff;
+    color: #010f79;
+    font-size: small !important;
+    border-radius: 0.3rem;
+    -webkit-box-shadow: 2px 2px 0px 1px #004aad;
+    box-shadow: 2px 2px 0px 1px #004aad;
+    margin-bottom: 5px;
+}
+
+.subtitle-sipam h2 {
+    font-size: medium;
+}
+
+.title-sipam h2 {
+    font-size: medium;
+}
+
+.btn-sipam {
+    background-color: #004aad !important;
+    padding: 0 !important;
+    margin: auto;
+    color: #fff;
+    font-size: large;
+}
+
+.btn-sipam:hover {
+    border: #004aad 2px solid;
+    color: #004aad;
+    font-weight: bold;
+    background-color: #fff !important;
+}
+
+.no-margin {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+}
+
+.font-color-004aad {
+    color: #004aad !important;
+}

@@ -19,6 +19,7 @@ use App\Http\Controllers\OIIController;
 use App\Http\Controllers\SubunidadeController;
 use App\Http\Controllers\VacinaController;
 use App\Http\Controllers\CategoriaAtributoController;
+use App\Http\Controllers\EscolaridadeController;
 use App\Http\Controllers\FracaoController;
 use App\Models\CategoriaAvaliacao;
 
@@ -56,6 +57,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('categorias_atributos', CategoriaAtributoController::class);
     Route::resource('atributos', AtributoController::class);
     Route::resource('fracoes', FracaoController::class);
+    Route::resource('escolaridades', EscolaridadeController::class);
 
     Route::get('/home', [HomeController::class, 'index'])->name('home');
 
@@ -88,6 +90,15 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('faat/preencher/{id}', '\App\Http\Controllers\FichaAvaliacaoAtributoController@preencher')->name('faat.preencher');
     Route::post('faat/preencher/{id}', '\App\Http\Controllers\FichaAvaliacaoAtributoController@realizarPreenchimento')->name('faat.realizar');
     Route::get('faat/pdf/{id}', '\App\Http\Controllers\FichaAvaliacaoAtributoController@pdf')->name('faat.pdf');
+    
+    Route::get('militares_fracoes/', '\App\Http\Controllers\MilitaresFracaoController@index')->name('militares_fracoes.index');
+    Route::get('militares_fracoes/relacionar_militar/{id}', '\App\Http\Controllers\MilitaresFracaoController@relacionarMilitar')->name('militares_fracoes.relacionar');
+    Route::post('militares_fracoes/relacionar_militar/{id}', '\App\Http\Controllers\MilitaresFracaoController@salvarRelacaoMilitar')->name('militares_fracoes.salvar');
+    Route::post('militares_fracoes/remover_militar/{id}', '\App\Http\Controllers\MilitaresFracaoController@removerMilitar')->name('militares_fracoes.remover');
 
+    Route::get('ficha_sipam/{id}', '\App\Http\Controllers\FichaSipamController@index')->name('ficha_sipam.index');
+    Route::get('ficha_sipam/escolaridade/{id}', '\App\Http\Controllers\MilitarEscolaridadeController@index')->name('ficha_sipam.escolaridade_index');
+    Route::get('ficha_sipam/cadastrar_escolaridade/{id}', '\App\Http\Controllers\MilitarEscolaridadeController@create')->name('ficha_sipam.escolaridade_create');
+    Route::post('ficha_sipam/cadastrar_escolaridade/', '\App\Http\Controllers\MilitarEscolaridadeController@store')->name('ficha_sipam.escolaridade_store');
 });
 

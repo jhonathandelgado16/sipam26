@@ -21,4 +21,9 @@ class Fracao extends Model
     public function getMilitarResponsavel(){
         return User::find($this->user_id)->name;
     }
+
+    public function getQtdMilitares(){
+        $militares = MilitaresFracao::where('fracao_id', $this->id)->get();
+        return $militares->count();
+    }
 }
