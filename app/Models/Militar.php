@@ -22,7 +22,8 @@ class Militar extends Model
         'posto_id',
         'pelotao_id',
         'tipo_sanguineo',
-        'data_nascimento'
+        'data_nascimento',
+        'turma'
     ];
 
     public function subunidade(){

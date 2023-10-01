@@ -56,12 +56,19 @@
                     {!! Form::text('nome', null, array('placeholder' => 'Nome','class' => 'form-control')) !!}
                 </div>
 
+
                 <div class="col-4">
                     <strong>Data de Nascimento</strong>
                     <input type="date" name="data_nascimento" class="form-control" id="">
                 </div>
 
-                <div class="col-6">
+
+                <div class="col-4">
+                    <strong>Turma/Ano de Incorporação:</strong>
+                    {!! Form::number('turma', null, array('placeholder' => 'Turma','class' => 'form-control', 'min'=> (intval(date('Y')-8)),'max'=>date('Y')),) !!}
+                </div>
+
+                <div class="col-4">
                     <strong>Subunidade:</strong>
                     <select name="subunidade_id" class="form-select">
                         @foreach ($subunidades as $key => $subunidade)
@@ -72,7 +79,7 @@
                     </select>
                 </div>
 
-                <div class="col-6">
+                <div class="col-4">
                     <strong>Pelotão:</strong>
                     <select name="pelotao_id" class="form-select">
                         @foreach ($pelotoes as $key => $pelotao)

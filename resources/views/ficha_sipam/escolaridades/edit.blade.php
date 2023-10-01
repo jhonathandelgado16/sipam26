@@ -3,7 +3,7 @@
 @section('content')
     <div class="row margin-bottom-15">
         <div class="pull-right col-8">
-            <a class="btn btn-white" href="{{ route('ficha_sipam.escolaridade_index', $militar->id) }}"><img
+            <a class="btn btn-white" href="{{ route('ficha_sipam.escolaridade_index', $militar_escolaridade->militar_id) }}"><img
                     src="{{ url('storage/icons/back.png') }}" height="20"> Voltar</a>
         </div>
     </div>
@@ -69,7 +69,7 @@
                 </div>
             </div>
 
-            {!! Form::open(['route' => 'ficha_sipam.escolaridade_store', 'method' => 'POST']) !!}
+            {!! Form::model($militar_escolaridade, ['method' => 'PATCH','route' => ['ficha_sipam.escolaridade_update', $militar_escolaridade->id]]) !!}
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12">
                     <div class="form-group margin-bottom-5">
@@ -79,7 +79,10 @@
                                 <strong>Escolaridade:</strong>
                                 <select name="escolaridade_id" class="form-select">
                                     @foreach ($escolaridades as $escolaridade)
-                                        <option value="{{ $escolaridade->id }}">
+                                        <option value="{{ $escolaridade->id }}" 
+                                            @if($militar_escolaridade->escolaridade_id == $escolaridade->id)
+                                                selected 
+                                            @endif>
                                             {{ $escolaridade->nome }}
                                         </option>
                                     @endforeach
@@ -88,16 +91,16 @@
 
                             <div class="col-12">
                                 <strong>Instituição de Ensino:</strong>
-                                <input name="instituicao_ensino" type="text" class="form-control"
+                                <input name="instituicao_ensino" type="text" class="form-control" value="{{ $militar_escolaridade->instituicao_ensino }}"
                                     placeholder="Ex: Universidade Estadual do Centro Oeste" required>
                             </div>
 
-                            <input name="militar_id" type="number" value="{{ $militar->id }}" class="d-none">
+                            <input name="militar_id" type="number" value="{{ $militar_escolaridade->militar_id }}" class="d-none">
 
                         </div>
                     </div>
                     <div class="col-xs-12 col-sm-12 col-md-12 text-center">
-                        <button type="submit" class="col-2 btn btn-sipam">Adicionar</button>
+                        <button type="submit" class="col-2 btn btn-sipam">Editar</button>
                     </div>
                 </div>
             </div>

@@ -6,8 +6,8 @@
     <!-- CSRF Token --><!-- Scripts --><!-- Fonts -->
     <!-- Styles -->
     <link href="{{ public_path('/css/pdf.css') }}" rel="stylesheet">
-    <link href="{{ public_path('/css/bootstrap.min.css') }}" rel="stylesheet">
-    
+    <script href="{{ public_path('/css/bootstrap.min.js') }}"></script>     
+    <link href="{{ public_path('/css/bootstrap.css') }}" rel="stylesheet"> 
 </head>
 <body>
     <div id="app">

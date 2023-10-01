@@ -84,9 +84,14 @@
                     {!! Form::text('nome_de_guerra', null, array('placeholder' => 'Nome de Guerra','class' => 'form-control')) !!}
                 </div>
 
-                <div class="col-12">
+                <div class="col-9">
                     <strong>Nome:</strong>
                     {!! Form::text('nome', null, array('placeholder' => 'Nome','class' => 'form-control')) !!}
+                </div>
+
+                <div class="col-3">
+                    <strong>Turma/Ano de Incorporação:</strong>
+                    {!! Form::number('turma', null, array('placeholder' => 'Turma','class' => 'form-control', 'min'=> (intval(date('Y')-8)),'max'=>date('Y')),) !!}
                 </div>
 
                 <div class="col-6">

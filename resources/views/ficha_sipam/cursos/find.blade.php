@@ -3,7 +3,7 @@
 @section('content')
     <div class="row margin-bottom-15">
         <div class="pull-right col-8">
-            <a class="btn btn-white" href="{{ route('ficha_sipam.escolaridade_index', $militar->id) }}"><img
+            <a class="btn btn-white" href="{{ route('ficha_sipam.curso_index', $militar->id) }}"><img
                     src="{{ url('storage/icons/back.png') }}" height="20"> Voltar</a>
         </div>
     </div>
@@ -62,46 +62,59 @@
             </div>
         @endif
 
+        @if ($message = Session::get('danger'))
+            <div class="alert alert-danger">
+                <p>{{ $message }}</p>
+            </div>
+        @endif
+
         <div class="col-12 row justify-content-center">
             <div class="col-12 row">
                 <div class="title-sipam row">
-                    <h2 class="col-10">Escolaridade do Militar</h2>
+                    <h2 class="col-10">Cadastrar Cursos e Estágios</h2>
                 </div>
             </div>
 
-            {!! Form::open(['route' => 'ficha_sipam.escolaridade_store', 'method' => 'POST']) !!}
+            {!! Form::open(['route' => ['cursos.encontrar_curso', $militar->id], 'method' => 'POST']) !!}
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12">
                     <div class="form-group margin-bottom-5">
-                        <div class="row">
-
-                            <div class="col-6">
-                                <strong>Escolaridade:</strong>
-                                <select name="escolaridade_id" class="form-select">
-                                    @foreach ($escolaridades as $escolaridade)
-                                        <option value="{{ $escolaridade->id }}">
-                                            {{ $escolaridade->nome }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-
-                            <div class="col-12">
-                                <strong>Instituição de Ensino:</strong>
-                                <input name="instituicao_ensino" type="text" class="form-control"
-                                    placeholder="Ex: Universidade Estadual do Centro Oeste" required>
-                            </div>
-
-                            <input name="militar_id" type="number" value="{{ $militar->id }}" class="d-none">
-
+                        <div class="col-12 row justify-content-end">
+                            <strong>Pesquise o Nome do Curso, Estágio ou Instituição de Ensino</strong>
+                            <input name="pesquisa" type="text" class="form-control" value="{{$pesquisa}}"
+                                placeholder="Ex: Programador de Sistemas" required>
+                            <button class="btn btn-primary col-2" type="submit"><ion-icon name="search-circle"></ion-icon> Pesquisar</button>
                         </div>
-                    </div>
-                    <div class="col-xs-12 col-sm-12 col-md-12 text-center">
-                        <button type="submit" class="col-2 btn btn-sipam">Adicionar</button>
                     </div>
                 </div>
             </div>
             {!! Form::close() !!}
+
+            <table class="table text-center background-white">
+                <tr>
+                    <th>Nome</th>
+                    <th>Horas</th>
+                    <th>Instituicao de Ensino</th>
+                    <th>Selecionar Curso</th>
+                </tr>
+
+                @if ($cursos != '')
+                @foreach ($cursos as $curso)
+                    <tr>
+                        <td>{{ $curso->nome }}</td>
+                        <td>{{ $curso->horas }}</td>
+                        <td>{{ $curso->instituicao_ensino }}</td>
+                        <td>
+                            <a href="{{ route('cursos.create_com_curso', [$militar->id, $curso->id]  ) }}" data-btn-ok-label="Confirmar" data-btn-cancel-label="Cancelar" type="submit" class='btn btn-success' data-toggle="confirmation" data-title="Esse curso será inserido na ficha do {{$militar->getMilitar()}}, deseja prosseguir?"> <ion-icon name="checkmark-circle"></ion-icon></button>
+                        </td>
+                    </tr>
+                @endforeach
+                <tr>
+                    <td colspan="99"> Não encontrou o curso que deseja inserir? Cadastre o curso no sistema clicando no botão abaixo <ion-icon name="happy"></ion-icon> <br> <a class=" col-2 btn btn-primary" href="{{ route('ficha_sipam.curso_create', $militar->id) }}">Adicionar Curso <ion-icon name="add-circle"></ion-icon></a></td>
+                </tr>
+                
+                @endif
+            </table>
 
         </div>
     @endsection

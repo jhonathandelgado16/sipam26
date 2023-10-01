@@ -19,9 +19,13 @@ use App\Http\Controllers\OIIController;
 use App\Http\Controllers\SubunidadeController;
 use App\Http\Controllers\VacinaController;
 use App\Http\Controllers\CategoriaAtributoController;
+use App\Http\Controllers\CursoController;
 use App\Http\Controllers\EscolaridadeController;
+use App\Http\Controllers\FichaAcompanhamentoController;
 use App\Http\Controllers\FracaoController;
 use App\Models\CategoriaAvaliacao;
+use App\Models\FichaAcompanhamento;
+use App\Models\SocialVisita;
 
 /*
 |--------------------------------------------------------------------------
@@ -58,6 +62,8 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('atributos', AtributoController::class);
     Route::resource('fracoes', FracaoController::class);
     Route::resource('escolaridades', EscolaridadeController::class);
+    Route::resource('cursos', CursoController::class);
+    Route::resource('social_visitas', SocialVisitaController::class);
 
     Route::get('/home', [HomeController::class, 'index'])->name('home');
 
@@ -99,6 +105,39 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('ficha_sipam/{id}', '\App\Http\Controllers\FichaSipamController@index')->name('ficha_sipam.index');
     Route::get('ficha_sipam/escolaridade/{id}', '\App\Http\Controllers\MilitarEscolaridadeController@index')->name('ficha_sipam.escolaridade_index');
     Route::get('ficha_sipam/cadastrar_escolaridade/{id}', '\App\Http\Controllers\MilitarEscolaridadeController@create')->name('ficha_sipam.escolaridade_create');
+    Route::get('ficha_sipam/cadastrar_escolaridade/{id}/editar', '\App\Http\Controllers\MilitarEscolaridadeController@edit')->name('ficha_sipam.escolaridade_edit');
     Route::post('ficha_sipam/cadastrar_escolaridade/', '\App\Http\Controllers\MilitarEscolaridadeController@store')->name('ficha_sipam.escolaridade_store');
+    Route::patch('ficha_sipam/cadastrar_escolaridade/update/{id}', '\App\Http\Controllers\MilitarEscolaridadeController@update')->name('ficha_sipam.escolaridade_update');
+    Route::delete('ficha_sipam/cadastrar_escolaridade/delete/{id}', '\App\Http\Controllers\MilitarEscolaridadeController@destroy')->name('ficha_sipam.escolaridade_delete');
+
+    Route::get('ficha_sipam/curso/{id}', '\App\Http\Controllers\MilitarCursoController@index')->name('ficha_sipam.curso_index');
+    Route::get('ficha_sipam/cadastrar_curso/{id}', '\App\Http\Controllers\MilitarCursoController@create')->name('ficha_sipam.curso_create');
+    Route::post('ficha_sipam/cadastrar_curso/', '\App\Http\Controllers\MilitarCursoController@store')->name('ficha_sipam.curso_store');
+
+    Route::post('cursos/aprovar/', '\App\Http\Controllers\MilitarCursoController@aprovarCurso')->name('cursos.aprovar');
+    Route::post('cursos/reprovar/', '\App\Http\Controllers\MilitarCursoController@reprovarCurso')->name('cursos.reprovar');
+
+    Route::get('ficha_sipam/create/{id}/{curso_id}', '\App\Http\Controllers\MilitarCursoController@createComCurso')->name('cursos.create_com_curso');
+
+    Route::get('ficha_sipam/curso/encontrar/{id}', '\App\Http\Controllers\MilitarCursoController@encontrar')->name('cursos.encontrar');
+    Route::post('ficha_sipam/curso/encontrar/{id}', '\App\Http\Controllers\MilitarCursoController@encontrarCurso')->name('cursos.encontrar_curso');
+
+    Route::get('ficha_acompanhamento/{id}', '\App\Http\Controllers\FichaAcompanhamentoController@index')->name('ficha_acompanhamentos.index');
+    Route::get('ficha_acompanhamento/create/{id}', '\App\Http\Controllers\FichaAcompanhamentoController@create')->name('ficha_acompanhamentos.create');
+    Route::post('ficha_acompanhamento/create/{id}', '\App\Http\Controllers\FichaAcompanhamentoController@store')->name('ficha_acompanhamentos.store');
+    Route::get('ficha_acompanhamento/edit/{id}', '\App\Http\Controllers\FichaAcompanhamentoController@edit')->name('ficha_acompanhamentos.edit');
+    Route::patch('ficha_acompanhamento/edit/{id}', '\App\Http\Controllers\FichaAcompanhamentoController@update')->name('ficha_acompanhamentos.update');
+
+    Route::get('ficha_acompanhamento/pdf/{id}', '\App\Http\Controllers\FichaAcompanhamentoController@pdf')->name('ficha_acompanhamentos.pdf');
+
+    Route::get('visita_social/{id}', '\App\Http\Controllers\SocialVisitaController@index')->name('visita_sociais.index');
+    Route::get('visita_social/create/{id}', '\App\Http\Controllers\SocialVisitaController@create')->name('visita_sociais.create');
+    Route::post('visita_social/{id}', '\App\Http\Controllers\SocialVisitaController@store')->name('visita_sociais.store');
+
+    Route::get('militar_veiculo/{id}', '\App\Http\Controllers\MilitarVeiculoController@index')->name('militar_veiculos.index');
+    Route::get('militar_veiculo/create/{id}', '\App\Http\Controllers\MilitarVeiculoController@create')->name('militar_veiculos.create');
+    Route::post('militar_veiculo/{id}', '\App\Http\Controllers\MilitarVeiculoController@store')->name('militar_veiculos.store');
+    Route::patch('militar_veiculo/edit/{veiculo}', '\App\Http\Controllers\MilitarVeiculoController@update')->name('militar_veiculos.update');
+    Route::get('militar_veiculo/edit/{veiculo}', '\App\Http\Controllers\MilitarVeiculoController@edit')->name('militar_veiculos.edit');
 });
 

@@ -3,7 +3,7 @@
 @section('content')
     <div class="row margin-bottom-15">
         <div class="pull-right col-8">
-            <a class="btn btn-white" href="{{ route('ficha_sipam.escolaridade_index', $militar->id) }}"><img
+            <a class="btn btn-white" href="{{ route('ficha_sipam.index', $militar->id) }}"><img
                     src="{{ url('storage/icons/back.png') }}" height="20"> Voltar</a>
         </div>
     </div>
@@ -62,46 +62,69 @@
             </div>
         @endif
 
-        <div class="col-12 row justify-content-center">
+        <div class="col-12 row justify-content-center card-sipam">
             <div class="col-12 row">
                 <div class="title-sipam row">
-                    <h2 class="col-10">Escolaridade do Militar</h2>
+                    <h2 class="col-10">Cursos e Estágios do Militar</h2>
+                    <a class=" col-2 btn btn-primary" href="{{ route('cursos.encontrar', $militar->id) }}">Adicionar Curso
+                        <ion-icon name="add-circle"></ion-icon></a>
                 </div>
             </div>
-
-            {!! Form::open(['route' => 'ficha_sipam.escolaridade_store', 'method' => 'POST']) !!}
-            <div class="row">
-                <div class="col-xs-12 col-sm-12 col-md-12">
-                    <div class="form-group margin-bottom-5">
-                        <div class="row">
-
-                            <div class="col-6">
-                                <strong>Escolaridade:</strong>
-                                <select name="escolaridade_id" class="form-select">
-                                    @foreach ($escolaridades as $escolaridade)
-                                        <option value="{{ $escolaridade->id }}">
-                                            {{ $escolaridade->nome }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-
-                            <div class="col-12">
-                                <strong>Instituição de Ensino:</strong>
-                                <input name="instituicao_ensino" type="text" class="form-control"
-                                    placeholder="Ex: Universidade Estadual do Centro Oeste" required>
-                            </div>
-
-                            <input name="militar_id" type="number" value="{{ $militar->id }}" class="d-none">
-
-                        </div>
-                    </div>
-                    <div class="col-xs-12 col-sm-12 col-md-12 text-center">
-                        <button type="submit" class="col-2 btn btn-sipam">Adicionar</button>
-                    </div>
+            <div class="col-12 row">
+                <div class="subtitle-sipam row">
+                    <h2 class="col-10">Cursos Pontuando</h2>
                 </div>
             </div>
-            {!! Form::close() !!}
+            <table class="table text-center">
+                <tr>
+                    <th>Nome</th>
+                    <th>Horas</th>
+                    <th>Instituicao de Ensino</th>
+                    <th>Data de Conclusão</th>
+                    <th>Pontos</th>
+                </tr>
+                @if (!$cursos_pontuando->isEmpty())
+                    @foreach ($cursos_pontuando as $curso)
+                        <tr>
+                            <td>{{ $curso->curso->nome }}</td>
+                            <td>{{ $curso->curso->horas }}</td>
+                            <td>{{ $curso->curso->instituicao_ensino }}</td>
+                            <td>{{ date('d/m/Y', strtotime($curso->data_conclusao)) }}</td>
+                            <td>{{ $curso->getPontuacaoCurso() }}</td>
+                        </tr>
+                    @endforeach
+                @else
+                    <tr>
+                        <td colspan="99">Não existem cursos ou estágios cadastrados.</td>
+                    </tr>
+                @endif
+
+            </table>
+            @if (!$cursos_nao_pontuando->isEmpty())
+                <div class="col-12 row">
+                    <div class="subtitle-sipam row">
+                        <h2 class="col-10">Cursos para o Currículo</h2>
+                    </div>
+                </div>
+                <table class="table text-center">
+                    <tr>
+                        <th>Nome</th>
+                        <th>Horas</th>
+                        <th>Instituição de Ensino</th>
+                        <th>Data de Conclusão</th>
+                    </tr>
+
+                    @foreach ($cursos_nao_pontuando as $curso)
+                        <tr>
+                            <td>{{ $curso->curso->nome }}</td>
+                            <td>{{ $curso->curso->horas }}</td>
+                            <td>{{ $curso->curso->instituicao_ensino }}</td>
+                            <td>{{ date('d/m/Y', strtotime($curso->data_conclusao)) }}</td>
+                        </tr>
+                    @endforeach
+                </table>
+            @endif
 
         </div>
+
     @endsection

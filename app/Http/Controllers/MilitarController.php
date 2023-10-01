@@ -37,7 +37,7 @@ class MilitarController extends Controller
         $user = User::findOrFail($user_auth->id);
         if (Auth::user()->hasRole('Admin')) {
             $militares = Militar::select('militars.id', 'numero', 'nome_de_guerra', 'posto_id', 'antiguidade')->join('postos', 'militars.posto_id', '=', 'postos.id')->
-            orderBy('antiguidade', 'ASC')->get();   
+            orderBy('antiguidade', 'ASC')->orderBy('numero', 'ASC')->limit(100)->get();   
         } elseif(Auth::user()->hasRole('Cmt Fração')) {
             $militares = Militar::Select('militars.id', 'numero', 'nome_de_guerra', 'posto_id', 'antiguidade')->join('postos', 'militars.posto_id', '=', 'postos.id')->
             orderBy('antiguidade', 'ASC')->orderBy('numero')->whereIn('militars.id', MilitaresFracao::select('militar_id')->whereIn('fracao_id', (Fracao::select('id')->where('user_id', $user->id)->get()->toArray()))->get()->toArray())->get();
@@ -120,13 +120,14 @@ class MilitarController extends Controller
             'pelotao_id' => 'required',
             'subunidade_id' => 'required',
             'data_nascimento' => 'required',
+            'turma' => 'required',
         ]);
 
         $militar = Militar::create(['nome' => $request->input('nome'), 'nome_de_guerra' => strtoupper($request->input('nome_de_guerra')),
         'numero' => $request->input('numero'), 'cpf' => $request->input('cpf'), 'idt_militar' => $request->input('idt_militar'),
         'endereco' => $request->input('endereco'), 'contato' => $request->input('contato'), 'responsavel' => $request->input('responsavel'),
          'posto_id' => $request->input('posto_id'), 'pelotao_id' => $request->input('pelotao_id'), 'subunidade_id' => $request->input('subunidade_id'),
-         'tipo_sanguineo' => $request->input('tipo_sanguineo'), 'data_nascimento' => $request->input('data_nascimento')]);
+         'tipo_sanguineo' => $request->input('tipo_sanguineo'), 'data_nascimento' => $request->input('data_nascimento'), 'turma' => $request->input('turma')]);
 
         return redirect()->route('militares.index')
                         ->with('success','Militar cadastrada com sucesso!');
@@ -157,6 +158,7 @@ class MilitarController extends Controller
             'pelotao_id' => 'required',
             'subunidade_id' => 'required',
             'data_nascimento' => 'required',
+            'turma' => 'required',
         ]);
 
         $militar = Militar::find($id);
@@ -174,6 +176,7 @@ class MilitarController extends Controller
         $militar->subunidade_id = $request->input('subunidade_id');
         $militar->data_nascimento = $request->input('data_nascimento');
         $militar->tipo_sanguineo = $request->input('tipo_sanguineo');
+        $militar->turma = $request->input('turma');
 
         $militar->save();
 

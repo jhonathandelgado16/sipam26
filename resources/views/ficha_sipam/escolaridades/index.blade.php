@@ -72,20 +72,28 @@
         <table class="table text-center">
             <tr>
                 <th>Escolaridade</th>
-                <th>Instituicao de Ensino</th>
+                <th>Instituição de Ensino</th>
                 <th>Pontos</th>
+                <th>Editar</th>
             </tr>
     
             @foreach ($escolaridades as $escolaridade)
             <tr>
-                <td>{{ $escolaridade->escolaridade->nome }}</td>
+                <td>{{ $escolaridade->nome }}</td>
                 <td>{{ $escolaridade->instituicao_ensino }}</td>
                 <td class="font-color-004aad">
-                    {{ $escolaridade->escolaridade->pontos }} <ion-icon name="arrow-up-circle-outline"></ion-icon>
+                    {{ $escolaridade->pontos }} <ion-icon name="arrow-up-circle-outline"></ion-icon>
                 </td>
+                @can('militar-edit')
+                <td>
+                    <a class="btn btn-white" href="{{ route('ficha_sipam.escolaridade_edit', $escolaridade->id) }}"><img src="{{url('storage/icons/edit.png')}}" height="20"></a>
+                    {!! Form::open(['method' => 'DELETE','route' => ['ficha_sipam.escolaridade_delete', $escolaridade->id],'style'=>'display:inline']) !!}
+                        <button data-btn-ok-label="Excluir" data-btn-cancel-label="Cancelar" type="submit" class='btn btn-white' data-toggle="confirmation" data-title="Deseja realmente escluir esta escolaridade?"> <img src="{{url('storage/icons/delete.png')}}" height="20"></button>
+                    {!! Form::close() !!}
+                </td>
+                @endcan
             </tr>
             @endforeach
         </table>
     </div>
-
 @endsection
