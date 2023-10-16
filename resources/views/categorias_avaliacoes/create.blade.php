@@ -32,7 +32,7 @@
             <div class="form-group row justify-content-center">
                 <div class="col-6">
                     <strong>Nome:</strong>
-                    {!! Form::text('nome', null, ['placeholder' => 'Ex: Avaliação de Oficiais', 'class' => 'form-control col-3']) !!}
+                    {!! Form::text('nome', null, ['placeholder' => 'Ex: Avaliação de Oficiais', 'class' => 'form-control col-12']) !!}
                 </div>
             </div>
         </div>

@@ -58,7 +58,7 @@
 
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
+        <nav class="navbar navbar-expand-md navbar-light navbar-laravel print-d-none">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/home') }}">
                     <img src="{{ url('storage/SIPAM26.png') }}" height="80">
@@ -82,18 +82,35 @@
                             <li><a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a></li>
                             <li><a class="nav-link" href="{{ route('register') }}">{{ __('Cadastre-se') }}</a></li>
                         @else
-                            <li><a class="nav-link" href="{{ route('militares.index') }}">{{ __('Militares') }}</a></li>
+                            <li><a class="nav-link font-small"
+                                    href="{{ route('militares.index') }}">{{ __('Militares') }}</a></li>
+
+                            @if (Auth::user()->hasRole('Admin') || Auth::user()->hasRole('Operador'))
+                                <li><a class="nav-link font-small"
+                                        href="{{ route('taf.index') }}">{{ __('TAF') }}</a>
+                            @endif
+
+                            @if (Auth::user()->hasRole('Cmt Fração'))
+                                <li><a class="nav-link font-small"
+                                        href="{{ route('avaliacao.index') }}">{{ __('Realizar Avaliação') }}</a>
+                            @endif
+
                             @if (Auth::user()->hasRole('Admin'))
-                                <li><a class="nav-link" href="{{ route('admins.index') }}">{{ __('Administrador') }}</a>
+                                <li><a class="nav-link font-small"
+                                        href="{{ route('relatorios.faltas') }}">{{ __('Relatórios') }}</a>
                                 </li>
-                                <li><a class="nav-link" href="{{ route('cursos.index') }}">{{ __('Cursos e Estágios') }}
+                                <li><a class="nav-link font-small"
+                                        href="{{ route('admins.index') }}">{{ __('Administrador') }}</a>
+                                </li>
+                                <li><a class="nav-link font-small"
+                                        href="{{ route('cursos.index') }}">{{ __('Cursos e Estágios') }}
                                         @if (app(App\Models\Curso::class)->where('aprovado', 2)->first())
-                                        <ion-icon name="notifications-circle"></ion-icon>
+                                            <ion-icon name="notifications-circle"></ion-icon>
                                         @endif
                                     </a></li>
                             @endif
-                            <li><a class="nav-link" href="#">Usuário: {{ Auth::user()->name }}</a></li>
-                            <li><a class="nav-link" href="{{ route('logout') }}">
+                            <li><a class="nav-link font-small" href="#">Usuário: {{ Auth::user()->name }}</a></li>
+                            <li><a class="nav-link font-small" href="{{ route('logout') }}">
                                     {{ __('Sair') }}
                                 </a>
                             </li>
@@ -123,11 +140,11 @@
 
             setTimeout(function() {
                 $(".alert").fadeOut('slow');
-            }, 5000);
+            }, 8000);
         });
     </script>
 
-    <footer>
+    <footer class="print-d-none">
         <div class="text-center div-footer">
             <p>SIPAM26 © 2023 Desenvolvido pelo 3º Sgt Jhonathan</p>
             <p>Para suporte procure a Assessoria de Gestão</p>

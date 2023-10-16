@@ -23,6 +23,11 @@
             <a class="btn btn-primary col-3" href="{{ route('fracoes.index') }}"> Gerenciar Frações</a>
             <a class="btn btn-primary col-3" href="{{ route('militares_fracoes.index') }}"> Definir Militares das Frações</a>
             <a class="btn btn-primary col-3" href="{{ route('escolaridades.index') }}"> Definir Escolaridades</a>
+            <a class="btn btn-primary col-3" href="{{ route('mencoes_taf.index') }}"> Gerenciar Meções de TAF</a>
+            <a class="btn btn-primary col-3" href="{{ route('taf_numeros.index') }}"> Gerenciar Números de TAF</a>
+            <a class="btn btn-primary col-3" href="{{ route('publicacoes.index') }}"> Gerenciar Publicações</a>
+            <a class="btn btn-primary col-3" href="{{ route('cursos_formacao.index') }}"> Gerenciar Cursos de Formação</a>
+            <a class="btn btn-primary col-3" href="{{ route('cnh_categorias.index') }}"> Gerenciar Categorias de CNH</a>
         </div>
     </div>
 </div>

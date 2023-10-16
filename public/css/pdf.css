@@ -130,8 +130,28 @@ table th{
     padding-bottom: 3px !important;
 }
 
+.check {
+    background-color: black;
+    width: 8px !important;
+    height: 8px !important;
+    border: 1px solid black;
+    border-radius: 50%;
+}
+
+.uncheck {
+    background-color: white;
+    width: 8px !important;
+    height: 8px !important;
+    border: 1px solid black;
+    border-radius: 50%;
+}
+
 .td-opcoes {
     width: 30% !important;
+}
+
+.v-align-top {
+    vertical-align: top !important;
 }
 
 .td-40 {
@@ -147,6 +167,18 @@ table th{
     text-align: center !important;
 }
 
+.td-15 {
+    width: 15% !important;
+}
+
+.td-55 {
+    width: 55% !important;
+}
+
+.td-5 {
+    width: 5% !important;
+}
+
 .text-justify {
     text-align: justify !important;
 }
@@ -157,4 +189,7 @@ table th{
 
 .page_break { page-break-before: always; }
 
-
+.width-25 {
+    width: 25% !important;
+    float: left;
+}

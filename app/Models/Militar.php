@@ -73,4 +73,61 @@ class Militar extends Model
         }
         return false;
     }
+
+    public function getTafRealizados(){
+        return Taf::where('militar_id', $this->id)->whereYear('created_at', date('Y'))->orderBy('created_at', 'desc')->get();
+    }
+
+    public function getPontosCursos(){
+        $horas = MilitarCurso::select('cursos.horas')->where('militar_id', $this->id)->where('pontuando', 1)->join('cursos', 'cursos.id', '=', 'militar_cursos.curso_id')->orderBy('cursos.horas','DESC')->whereYear('militar_cursos.data_conclusao', '=', date('Y'))->limit(3)->sum('cursos.horas');
+        
+        if($horas == 0){
+            return 0;
+        }
+
+        return round($horas / 100, 2);
+    }
+
+    public function getPontosEscolaridade(){
+
+        if(MilitarEscolaridade::select('escolaridades.pontos')->where('militar_id', $this->id)->join('escolaridades', 'escolaridades.id', '=', 'militar_escolaridades.escolaridade_id')->orderBy('escolaridades.pontos', 'desc')->first() == null)
+            return 0;
+        return MilitarEscolaridade::select('escolaridades.pontos')->where('militar_id', $this->id)->join('escolaridades', 'escolaridades.id', '=', 'militar_escolaridades.escolaridade_id')->orderBy('escolaridades.pontos', 'desc')->first()->pontos;
+    }
+
+    public function getPontosConhecimento(){
+        return ($this->getPontosCursos() + $this->getPontosEscolaridade());
+    }
+
+    public function getPontosTaf(){
+        return Taf::select('taf_mencaos.pontos')->where('militar_id', $this->id)->whereYear('tafs.created_at', date('Y'))->join('taf_mencaos', 'tafs.taf_mencao_id', 'taf_mencaos.id')->orderBy('tafs.created_at', 'desc')->sum('pontos');
+    }
+
+    public function getPontosCursoFormacao(){
+        if(CursoFormacaoMilitar::where('militar_id', $this->id)->join('curso_formacaos', 'curso_formacaos.id', '=', 'curso_formacao_militars.curso_formacao_id')->orderBy('pontos', 'DESC')->first() == null)
+            return 0;
+        return CursoFormacaoMilitar::where('militar_id', $this->id)->join('curso_formacaos', 'curso_formacaos.id', '=', 'curso_formacao_militars.curso_formacao_id')->orderBy('pontos', 'DESC')->first()->pontos;
+    }
+
+    public function getPontosCnh(){
+        if(CnhMilitar::where('militar_id', $this->id)->join('cnh_categorias', 'cnh_categorias.id', '=', 'cnh_militars.cnh_categoria_id')->orderBy('pontos', 'DESC')->first() == null)
+            return 0;
+        return CnhMilitar::where('militar_id', $this->id)->join('cnh_categorias', 'cnh_categorias.id', '=', 'cnh_militars.cnh_categoria_id')->orderBy('pontos', 'DESC')->first()->pontos;
+    }
+
+    public function getPontosHabilidade(){
+        return ($this->getPontosTaf() + $this->getPontosCursoFormacao() + $this->getPontosCnh());
+    }
+
+    public function getPontosAtitude(){
+        if(AvaliacaoMilitar::where('militar_id', $this->id)->where('situacao', 2)->first() == null)
+            return 0;
+        return AvaliacaoMilitar::where('militar_id', $this->id)->where('situacao', 2)->first()->nota_final;
+    }
+
+    public function getPontosMilitar(){
+        return ($this->getPontosHabilidade() + $this->getPontosAtitude() + $this->getPontosConhecimento());
+    }
+
+
 }

@@ -69,6 +69,13 @@
 
             </div>
         </div>
+        @if ($ficha != null)
+        <div class="col-12">
+            <div class="row justify-content-center">
+                <a target="_blank" class="col-4 btn btn-acompanhamento" href="{{ route('ficha_acompanhamentos.pdf', $ficha) }}"><ion-icon name="document"></ion-icon> Gerar PDF</a>
+            </div>
+        </div>
+        @endif
 
         @if ($message = Session::get('success'))
             <div class="alert alert-success">

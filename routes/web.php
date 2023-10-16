@@ -19,10 +19,15 @@ use App\Http\Controllers\OIIController;
 use App\Http\Controllers\SubunidadeController;
 use App\Http\Controllers\VacinaController;
 use App\Http\Controllers\CategoriaAtributoController;
+use App\Http\Controllers\CnhCategoriaController;
 use App\Http\Controllers\CursoController;
+use App\Http\Controllers\CursoFormacaoController;
 use App\Http\Controllers\EscolaridadeController;
 use App\Http\Controllers\FichaAcompanhamentoController;
 use App\Http\Controllers\FracaoController;
+use App\Http\Controllers\PublicacaoController;
+use App\Http\Controllers\TafMencaoController;
+use App\Http\Controllers\TafNumeroController;
 use App\Models\CategoriaAvaliacao;
 use App\Models\FichaAcompanhamento;
 use App\Models\SocialVisita;
@@ -64,6 +69,11 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('escolaridades', EscolaridadeController::class);
     Route::resource('cursos', CursoController::class);
     Route::resource('social_visitas', SocialVisitaController::class);
+    Route::resource('mencoes_taf', TafMencaoController::class);
+    Route::resource('taf_numeros',TafNumeroController::class);
+    Route::resource('publicacoes',PublicacaoController::class);
+    Route::resource('cursos_formacao',CursoFormacaoController::class);
+    Route::resource('cnh_categorias',CnhCategoriaController::class);
 
     Route::get('/home', [HomeController::class, 'index'])->name('home');
 
@@ -128,7 +138,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('ficha_acompanhamento/edit/{id}', '\App\Http\Controllers\FichaAcompanhamentoController@edit')->name('ficha_acompanhamentos.edit');
     Route::patch('ficha_acompanhamento/edit/{id}', '\App\Http\Controllers\FichaAcompanhamentoController@update')->name('ficha_acompanhamentos.update');
 
-    Route::get('ficha_acompanhamento/pdf/{id}', '\App\Http\Controllers\FichaAcompanhamentoController@pdf')->name('ficha_acompanhamentos.pdf');
+    Route::get('ficha_acompanhamento/pdf/{ficha_acompanhamento}', '\App\Http\Controllers\FichaAcompanhamentoController@pdf')->name('ficha_acompanhamentos.pdf');
 
     Route::get('visita_social/{id}', '\App\Http\Controllers\SocialVisitaController@index')->name('visita_sociais.index');
     Route::get('visita_social/create/{id}', '\App\Http\Controllers\SocialVisitaController@create')->name('visita_sociais.create');
@@ -139,5 +149,32 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('militar_veiculo/{id}', '\App\Http\Controllers\MilitarVeiculoController@store')->name('militar_veiculos.store');
     Route::patch('militar_veiculo/edit/{veiculo}', '\App\Http\Controllers\MilitarVeiculoController@update')->name('militar_veiculos.update');
     Route::get('militar_veiculo/edit/{veiculo}', '\App\Http\Controllers\MilitarVeiculoController@edit')->name('militar_veiculos.edit');
+
+    Route::get('taf/create', '\App\Http\Controllers\TafController@create')->name('taf.create');
+    Route::post('taf', '\App\Http\Controllers\TafController@store')->name('taf.store');
+    Route::get('taf/create_single/{militar_id}', '\App\Http\Controllers\TafController@create_single')->name('taf.create_single');
+    Route::post('taf/store_single', '\App\Http\Controllers\TafController@store_single')->name('taf.store_single');
+    Route::get('taf', '\App\Http\Controllers\TafController@index')->name('taf.index');
+    Route::get('taf/show/{id}', '\App\Http\Controllers\TafController@show')->name('taf.show');
+
+    Route::get('curso_formacao_militar/create/{militar_id}', '\App\Http\Controllers\CursoFormacaoMilitarController@create')->name('curso_formacao_militar.create');
+    Route::post('curso_formacao_militar', '\App\Http\Controllers\CursoFormacaoMilitarController@store')->name('curso_formacao_militar.store');
+
+    Route::get('cnh_militar/create/{militar_id}', '\App\Http\Controllers\CnhMilitarController@create')->name('cnh_militar.create');
+    Route::post('cnh_militar', '\App\Http\Controllers\CnhMilitarController@store')->name('cnh_militar.store');
+
+    Route::get('relatorios/faltas', '\App\Http\Controllers\RelatoriosController@index')->name('relatorios.faltas');
+    Route::get('relatorios/pdf', '\App\Http\Controllers\RelatoriosController@pdf')->name('relatorios.pdf');
+
+    Route::get('categorias_avaliacoes/definir/{categoria_atributo_id}', '\App\Http\Controllers\CategoriaAvaliacaoController@definir')->name('categorias_avaliacoes.definir');
+    Route::post('categorias_avaliacoes/definir', '\App\Http\Controllers\CategoriaAvaliacaoController@definir_store')->name('categorias_avaliacoes.definir_store');
+
+    Route::get('avaliacao/realizar/{militar_id}', '\App\Http\Controllers\AvaliacaoController@realizar')->name('avaliacao.realizar');
+    Route::post('avaliacao/realizar', '\App\Http\Controllers\AvaliacaoController@store')->name('avaliacao.store');
+    Route::get('avaliacao', '\App\Http\Controllers\AvaliacaoController@index')->name('avaliacao.index');
+    Route::get('avaliacao/edit/{militar_id}', '\App\Http\Controllers\AvaliacaoController@edit')->name('avaliacao.edit');
+    Route::patch('avaliacao/edit', '\App\Http\Controllers\AvaliacaoController@update')->name('avaliacao.update');
+    Route::get('avaliacao/aprovar/{militar_id}', '\App\Http\Controllers\AvaliacaoController@aprovar')->name('avaliacao.aprovar');
+    Route::patch('avaliacao/aprovar', '\App\Http\Controllers\AvaliacaoController@aprovar_update')->name('avaliacao.aprovar_update');
 });
 

@@ -154,10 +154,13 @@ class FichaAcompanhamentoController extends Controller
         return redirect()->route('ficha_acompanhamentos.index', $id)->with('success', 'Ficha de acompanhamento atualizada com sucesso!');
     }
 
-    public function pdf()
-    {
-        $pdf = PDF::loadView('ficha_acompanhamento.ficha_pdf')->setPaper('a4', 'landscape');
-        return $pdf->stream('ficha.pdf');
-        // return view('ficha_acompanhamento.ficha_pdf');
+    public function pdf(FichaAcompanhamento $ficha_acompanhamento)
+    {   
+        $militar = Militar::find($ficha_acompanhamento->militar_id);
+        $visitas_sociais = SocialVisita::where('militar_id', $militar->id)->orderBy('data', 'desc')->limit(1)->get();
+        $carros = MilitarVeiculo::where('militar_id', $militar->id)->where('tipo_veiculo', 1)->get();
+        $motos = MilitarVeiculo::where('militar_id', $militar->id)->where('tipo_veiculo', 2)->get();
+        $pdf = PDF::loadView('ficha_acompanhamento.ficha_pdf', compact('ficha_acompanhamento', 'militar', 'visitas_sociais', 'carros', 'motos'))->setPaper('a4', 'landscape');
+        return $pdf->stream('ficha acompanhamento '. $militar->getMilitar() .'.pdf');
     }
 }

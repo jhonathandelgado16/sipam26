@@ -77,36 +77,31 @@
 
                             <div class="col-12">
                                 <strong>Nome do Curso ou Estágio:</strong>
-                                <input name="nome" type="text" class="form-control" 
-                                @if ($curso != '')
-                                    value="{{$curso->nome}}"
-                                    readonly
-                                @endif
+                                <input name="nome" type="text" class="form-control"
+                                    @if ($curso != '') value="{{ $curso->nome }}"
+                                    readonly @endif
                                     placeholder="Ex: Programador de Sistemas" required>
                             </div>
 
                             <div class="col-4">
                                 <strong>Carga horária:</strong>
                                 <input name="horas" type="number" class="form-control"
-                                @if ($curso != '')
-                                    value="{{$curso->horas}}"
-                                    readonly
-                                @endif
+                                    @if ($curso != '') value="{{ $curso->horas }}"
+                                    readonly @endif
                                     placeholder="Ex: 40" required>
                             </div>
 
                             <div class="col-4">
                                 <strong>Data de Conclusão:</strong>
-                                <input name="data_conclusao" type="date" value="{{date('Y-m-d')}}" class="form-control text-center" required>
+                                <input name="data_conclusao" type="date" value="{{ date('Y-m-d') }}"
+                                    class="form-control text-center" required>
                             </div>
 
                             <div class="col-12">
                                 <strong>Instituição de Ensino:</strong>
                                 <input name="instituicao_ensino" type="text" class="form-control"
-                                @if ($curso != '')
-                                    value="{{$curso->instituicao_ensino}}"
-                                    readonly
-                                @endif
+                                    @if ($curso != '') value="{{ $curso->instituicao_ensino }}"
+                                    readonly @endif
                                     placeholder="Ex: SENAC" required>
                             </div>
 
@@ -124,4 +119,5 @@
             {!! Form::close() !!}
 
         </div>
+
     @endsection

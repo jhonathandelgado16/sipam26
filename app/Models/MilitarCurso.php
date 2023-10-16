@@ -21,7 +21,7 @@ class MilitarCurso extends Model
 
     public function curso(){
         return $this->belongsTo(Curso::class);
-    }    
+    }   
 
     public function getPontuacaoCurso(){
         if ($this->curso->horas >= 100) {

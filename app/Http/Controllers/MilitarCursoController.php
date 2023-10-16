@@ -95,7 +95,7 @@ class MilitarCursoController extends Controller
         ]);
 
         if ($request->input('curso_id') == '') {
-            $buscaCurso = Curso::whereRaw('(UPPER(`nome`) LIKE "' . strtoupper($request->input('nome')) . '") AND (UPPER(`instituicao_ensino`) LIKE "' . strtoupper($request->input('instituicao_ensino')) . '")')->first();
+            $buscaCurso = Curso::whereRaw('(UPPER(`nome`) LIKE "' . strtoupper($request->input('nome')) . '") AND (UPPER(`instituicao_ensino`) LIKE "' . strtoupper($request->input('instituicao_ensino')) . '") AND (horas = "'.  $request->input('horas') . '")')->first();
 
             if ($buscaCurso) {
                 return redirect()
@@ -109,7 +109,20 @@ class MilitarCursoController extends Controller
             $curso_id = $request->input('curso_id');
         }
 
-        $militar_curso = MilitarCurso::create(['data_conclusao' => $request->input('data_conclusao'), 'curso_id' => $curso_id, 'militar_id' => $request->input('militar_id')]);
+
+        if ($request->input('curso_id') == '') {
+            $situacao_aprovado = '2';
+        } else {
+            $curso = Curso::find($curso_id);
+
+            if($curso->aprovado == '1'){
+                $situacao_aprovado = '1';
+            } else {
+                $situacao_aprovado = '4';
+            }
+        }
+
+        $militar_curso = MilitarCurso::create(['data_conclusao' => $request->input('data_conclusao'), 'curso_id' => $curso_id, 'militar_id' => $request->input('militar_id'), 'pontuando' => $situacao_aprovado]);
 
         return redirect()
             ->route('ficha_sipam.curso_index', $request->input('militar_id'))

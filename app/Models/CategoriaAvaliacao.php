@@ -20,4 +20,18 @@ class CategoriaAvaliacao extends Model
             return true;
         return false;
     }
+
+    public function possuiAtributo($atributo_id){
+        if(AtributoAvaliacao::where('atributo_id', $atributo_id)->where('categoria_avaliacao_id', $this->id)->first())
+            return true;
+        return false;
+    }
+
+    public function getAtributosBasicos(){
+        return Atributo::whereIn('id', AtributoAvaliacao::select('atributo_id')->where('categoria_avaliacao_id', $this->id)->get()->toArray())->where('categoria_atributo_id', 2)->get();
+    }
+
+    public function getAtributosFuncionais(){
+        return Atributo::whereIn('id', AtributoAvaliacao::select('atributo_id')->where('categoria_avaliacao_id', $this->id)->get()->toArray())->where('categoria_atributo_id', 1)->get();
+    }
 }
