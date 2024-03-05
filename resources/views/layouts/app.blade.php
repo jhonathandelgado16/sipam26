@@ -57,8 +57,8 @@
 </head>
 
 <body>
-    <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light navbar-laravel print-d-none">
+    <div id="app d-print-none">
+        <nav class="navbar navbar-expand-md navbar-light navbar-laravel d-print-none">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/home') }}">
                     <img src="{{ url('storage/SIPAM26.png') }}" height="80">
@@ -96,6 +96,9 @@
                             @endif
 
                             @if (Auth::user()->hasRole('Admin'))
+                                <li><a class="nav-link font-small"
+                                        href="{{ route('ranking.index') }}">{{ __('Ranking') }}</a>
+                                </li>
                                 <li><a class="nav-link font-small"
                                         href="{{ route('relatorios.faltas') }}">{{ __('Relatórios') }}</a>
                                 </li>
@@ -144,7 +147,7 @@
         });
     </script>
 
-    <footer class="print-d-none">
+    <footer class="d-print-none">
         <div class="text-center div-footer">
             <p>SIPAM26 © 2023 Desenvolvido pelo 3º Sgt Jhonathan</p>
             <p>Para suporte procure a Assessoria de Gestão</p>

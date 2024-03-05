@@ -31,14 +31,25 @@ class Taf extends Model
         return $this->belongsTo(Publicacao::class);
     }
 
-    public static function getPublicacoesDeTaf($ano, $taf_numero_id, $subunidade_id = null)
+    public static function getPublicacoesDeTaf($taf_numero_id, $subunidade_id = null)
     {
+        switch (date('m')) {
+            case date('m') > 3:
+                $data_inicio = date((date('Y')).'-03-01');
+                $data_final = date((date('Y')+1).'-03-01');
+                break;  
+            case date('m') <= 3:
+                $data_inicio = date((date('Y')-1).'-03-01');
+                $data_final = date((date('Y')).'-03-01');
+                break;      
+        }
+
         if ($subunidade_id == null) {
             return Publicacao::whereIn(
                 'id',
                 Taf::select('publicacao_id')
                     ->where('taf_numero_id', $taf_numero_id)
-                    ->whereYear('tafs.created_at', $ano)
+                    ->whereBetween('created_at', [$data_inicio, $data_final])
                     ->groupBy('publicacao_id')
                     ->get()
                     ->toArray(),
@@ -49,7 +60,7 @@ class Taf extends Model
             'id',
             Taf::select('publicacao_id')
                 ->where('taf_numero_id', $taf_numero_id)
-                ->whereYear('tafs.created_at', $ano)
+                ->whereBetween('tafs.created_at', [$data_inicio, $data_final])
                 ->join('militars', 'tafs.militar_id', '=', 'militars.id')
                 ->where('subunidade_id', $subunidade_id)
                 ->groupBy('publicacao_id')
@@ -58,10 +69,21 @@ class Taf extends Model
         )->get();
     }
 
-    public static function getTafPorPublicacoesMencao($ano, $publicacao_id, $taf_mencao_id, $subunidade_id = null)
+    public static function getTafPorPublicacoesMencao($publicacao_id, $taf_mencao_id, $subunidade_id = null)
     {
+        switch (date('m')) {
+            case date('m') >= 3:
+                $data_inicio = date((date('Y')).'-03-01');
+                $data_final = date((date('Y')+1).'-03-01');
+                break;  
+            case date('m') <= 3:
+                $data_inicio = date((date('Y')-1).'-03-01');
+                $data_final = date((date('Y')).'-03-01');
+                break;      
+        }
+        
         if ($subunidade_id == null) {
-            return Taf::whereYear('tafs.created_at', $ano)
+            return Taf::whereBetween('tafs.created_at', [$data_inicio, $data_final])
             ->where('publicacao_id', $publicacao_id)
             ->where('taf_mencao_id', $taf_mencao_id)
             ->join('militars', 'tafs.militar_id', '=', 'militars.id')
@@ -71,7 +93,7 @@ class Taf extends Model
             ->get();
         }
 
-        return Taf::whereYear('tafs.created_at', $ano)
+        return Taf::whereBetween('tafs.created_at', [$data_inicio, $data_final])
             ->where('publicacao_id', $publicacao_id)
             ->where('taf_mencao_id', $taf_mencao_id)
             ->join('militars', 'tafs.militar_id', '=', 'militars.id')

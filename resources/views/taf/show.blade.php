@@ -32,12 +32,12 @@
     <div class="col-12 row justify-content-center card-sipam">
         <div class="col-12">
             @foreach ($publicacoes_taf as $publicacao_taf)
-                @foreach (app(App\Models\TafMencao::class)->getMencoesDoTaf(date('Y'), $taf_numero->id, $publicacao_taf->id) as $mencao)
+                @foreach (app(App\Models\TafMencao::class)->getMencoesDoTaf( $taf_numero->id, $publicacao_taf->id) as $mencao)
                     <div class="row margin-bottom-10">
                         <h2 class="subtitle-sipam font-large">Obtiveram a menção {{ $mencao->mencao }}, publicado no
                             {{ $publicacao_taf->getPublicacao() }}</h2>
 
-                        @foreach (app(App\Models\Taf::class)->getTafPorPublicacoesMencao(date('Y'), $publicacao_taf->id, $mencao->id, $subunidade_id) as $taf)
+                        @foreach (app(App\Models\Taf::class)->getTafPorPublicacoesMencao( $publicacao_taf->id, $mencao->id, $subunidade_id) as $taf)
                             <div class="col-12">
                                 <h2 class="col-12 font-small">{{ $taf->militar->getMIlitar() }}</h3>
                             </div>

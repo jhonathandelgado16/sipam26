@@ -43,7 +43,7 @@ class FichaAcompanhamentoController extends Controller
             'possui_cnh' => 'required',
         ]);
 
-        $acidentes_automocilisticos = $request->input('acidentes_motociclisticos');
+        $acidentes_motociclisticos = $request->input('acidentes_motociclisticos');
         if ($request->input('possui_cnh') == '2') {
             $acidentes_motociclisticos = null;
         }
@@ -76,6 +76,10 @@ class FichaAcompanhamentoController extends Controller
                 'contato_pai' => $request->input('contato_pai'),
                 'nome_mae' => $request->input('nome_mae'),
                 'contato_mae' => $request->input('contato_mae'),
+                'qtd_irmaos' => $request->input('qtd_irmaos'),
+                'renda_familiar' => $request->input('renda_familiar'),
+                'objetivo_de_vida' => $request->input('objetivo_de_vida'),
+                'lazer' => $request->input('lazer'),
                 'acidentes_atividades_militares' => $request->input('acidentes_atividades_militares'),
                 'acidentes_atividades_militares_bi' => $acidentes_atividades_militares_bi,
                 'acidentes_automobilisticos' => $request->input('acidentes_automobilisticos'),
@@ -140,6 +144,10 @@ class FichaAcompanhamentoController extends Controller
         $ficha_acompanhamento->contato_pai = $request->input('contato_pai');
         $ficha_acompanhamento->nome_mae = $request->input('nome_mae');
         $ficha_acompanhamento->contato_mae = $request->input('contato_mae');
+        $ficha_acompanhamento->qtd_irmaos = $request->input('qtd_irmaos');
+        $ficha_acompanhamento->renda_familiar = $request->input('renda_familiar');
+        $ficha_acompanhamento->objetivo_de_vida = $request->input('objetivo_de_vida');
+        $ficha_acompanhamento->lazer = $request->input('lazer');
         $ficha_acompanhamento->acidentes_atividades_militares = $request->input('acidentes_atividades_militares');
         $ficha_acompanhamento->acidentes_atividades_militares_bi = $acidentes_atividades_militares_bi;
         $ficha_acompanhamento->acidentes_automobilisticos = $request->input('acidentes_automobilisticos');

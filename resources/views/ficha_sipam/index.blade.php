@@ -29,10 +29,13 @@
                             <h4 class="">Fração: {{ $militar->pelotao->pelotao }} -
                                 {{ $militar->pelotao->cmt_pelotao }}</h4>
                         </div>
-                        <div class="col-4 text-left row">
+                        <div class="col-3 text-left row">
                             <h4>Subunidade: {{ $militar->subunidade->nome }}</h4>
                         </div>
-                        <div class="col-3 text-left row">
+                        <div class="col-2 text-left row">
+                            <h4>QM: {{ $militar->qualificacao_militar->qualificacao }}</h4>
+                        </div>
+                        <div class="col-2 text-left row">
                             <h4>Situação: {{ $militar->situacao }}</h4>
                         </div>
                         <div class="col-6 text-left row">
@@ -53,24 +56,29 @@
                     </div>
                 </div>
                 <div class="row col-12">
-                    <div class="col-3">
-                        <h2 class="title-sipam font-small text-center">Pontos Conhecimento </h2> 
-                        <h2 class="col-12 text-center font-color-004aad">{{$militar->getPontosConhecimento()}}<ion-icon
-                            name="arrow-up-circle-sharp"></ion-icon></h2>
+                    <div class="col-2">
+                        <h2 class="title-sipam font-small text-center">Pontos Conhecimento </h2>
+                        <h2 class="col-12 text-center font-color-004aad">{{ $militar->getPontosConhecimento() }}<ion-icon
+                                name="arrow-up-circle-sharp"></ion-icon></h2>
                     </div>
-                    <div class="col-3">
-                        <h2 class="title-sipam font-small text-center">Pontos Habilidade </h2> 
-                        <h2 class="col-12 text-center font-color-004aad">{{$militar->getPontosHabilidade()}}<ion-icon
-                            name="arrow-up-circle-sharp"></ion-icon></h2>
+                    <div class="col-2">
+                        <h2 class="title-sipam font-small text-center">Pontos Habilidade </h2>
+                        <h2 class="col-12 text-center font-color-004aad">{{ $militar->getPontosHabilidade() }}<ion-icon
+                                name="arrow-up-circle-sharp"></ion-icon></h2>
                     </div>
-                    <div class="col-3">
-                        <h2 class="title-sipam font-small text-center">Pontos Atitude </h2> 
-                        <h2 class="col-12 text-center font-color-004aad">{{$militar->getPontosAtitude()}}<ion-icon
-                            name="arrow-up-circle-sharp"></ion-icon></h2>
+                    <div class="col-2">
+                        <h2 class="title-sipam font-small text-center">Pontos Atitude </h2>
+                        <h2 class="col-12 text-center font-color-004aad">{{ $militar->getPontosAtitude() }}<ion-icon
+                                name="arrow-up-circle-sharp"></ion-icon></h2>
                     </div>
-                    <div class="col-3 bg-color-004aad">
-                        <h2 class="subtitle-sipam font-small text-center">Conceito Final</h2> 
-                        <h2 class="col-12 text-center font-color-fff">{{$militar->getPontosMilitar()}}</h2>
+                    <div class="col-2">
+                        <h2 class="title-acompanhamento font-small text-center">Demérito </h2>
+                        <h2 class="col-12 text-center color-red">{{ $militar->getPontosDemerito() }}<ion-icon
+                                name="arrow-down-circle-sharp"></ion-icon></h2>
+                    </div>
+                    <div class="col-4 bg-color-004aad">
+                        <h2 class="subtitle-sipam font-small text-center">Conceito Final</h2>
+                        <h2 class="col-12 text-center font-color-fff">{{ $militar->getPontosMilitar() }}</h2>
                     </div>
                 </div>
             </div>
@@ -227,7 +235,8 @@
                             </div>
                         @endif
                         <br>
-                        <a class="btn btn-primary font-small" href="{{ route('taf.create_single', $militar->id) }}">Inserir
+                        <a class="btn btn-primary font-small"
+                            href="{{ route('taf.create_single', $militar->id) }}">Inserir
                             TAF realizado
                             <ion-icon name="add-circle"></ion-icon></a>
                     </div>
@@ -261,7 +270,7 @@
                         @else
                             <div class="col-12 row">
                                 <h4 class="col-12 text-center">
-                                    O militar não possui Curso de Formação de Condutores cadastrados
+                                    O militar não possui Cursos de Formação Militares cadastrados                                    
                                 </h4>
                             </div>
                         @endif
@@ -301,7 +310,7 @@
                         @else
                             <div class="col-12 row">
                                 <h4 class="col-12 text-center">
-                                    O militar não possui Cursos de Formação Militares cadastrados
+                                    O militar não possui Curso de Formação de Condutores cadastrados
                                 </h4>
                             </div>
                         @endif
@@ -367,6 +376,41 @@
                     O militar ainda não possui avaliações concluídas
                 </div>
             @endif
+        </div>
+
+        <div class="col-12 row justify-content-center card-sipam">
+            <div class="col-12 row title-sipam">
+                <h2 class="text-center font-large">Demérito</h2>
+            </div>
+            @if (!$demeritos->isEmpty())
+                @foreach ($demeritos as $demerito)
+                    <div class="col-6 row card-cursos border-shadow">
+                        <div class="col-4 text-center">
+                            <h5 class="escolaridade-ficha color-red"><ion-icon name="arrow-down-circle-sharp"></ion-icon>
+                                {{ $demerito->demerito->pontos_demerito }} Pts</h5>
+                        </div>
+                        <p class="col-8 text-center">
+                            Demérito: {{ $demerito->demerito->descricao }} <br>
+                            Publicação: {{ $demerito->publicacao }}
+                        </p>
+                    </div>
+                @endforeach
+            @else
+                <div class="col-12 justify-content-center no-margin text-center">
+                    O militar não possui deméritos cadastrados
+                </div>
+            @endif
+            <br>
+            <div class="col-12">
+                <div class="row justify-content-center">
+                    <a class="btn btn-primary font-small col-3"
+                        href="{{ route('ficha_sipam.demerito_index', $militar->id) }}">Visualizar Deméritos
+                        <ion-icon name="search"></ion-icon></a>
+                    <a class="btn btn-primary font-small col-3"
+                        href="{{ route('ficha_sipam.demerito_create', $militar->id) }}">Inserir Demérito
+                        <ion-icon name="add-circle"></ion-icon></a>
+                </div>
+            </div>
         </div>
 
     </div>

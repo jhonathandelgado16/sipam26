@@ -136,6 +136,30 @@
                                 </div>
                                 <div class="col-8 margin-bottom-10">
                                     <div class="row">
+                                        <div class="col-6 text-left row">
+                                            <h4 class=""><b>Quantidade de Imrãos:</b> {{ $ficha->qtd_irmaos }}
+                                            </h4>
+                                        </div>
+                                        <div class="col-6 text-left row">
+                                            <h4 class="col"><b>Renda familiar média:</b>
+                                               R$ {{ $ficha->renda_familiar }}
+                                            </h4>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 text-left row">
+                                            <h4 class=""><b>Objetivo de vida:</b> {{ $ficha->objetivo_de_vida }}
+                                            </h4>
+                                        </div>
+                                        <div class="col-12 text-left row">
+                                            <h4 class="col"><b>Lazer:</b>
+                                                {{ $ficha->lazer }}
+                                            </h4>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-8 margin-bottom-10">
+                                    <div class="row">
                                         <div class="col-12 text-left row">
                                             <h4 class=""><b>Em caso de Acidente, ligar para:</b>
                                             </h4>

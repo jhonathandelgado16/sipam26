@@ -179,6 +179,18 @@ margin-left: 5px;
 margin-right: 5px;
 }
 
+.margin-bottom-50 {
+    margin-bottom: 50px;
+}
+
+.margin-top-20 {
+    margin-top: 20px;
+}
+
+.margin-top-40 {
+    margin-top: 40px;
+}
+
 input[type=radio]:hover{
 cursor: pointer;
 }
@@ -615,6 +627,11 @@ padding: 5px;
 height: 100%;
 }
 
+.height-100vh {
+    height: 70vh;
+    overflow-y: scroll !important;
+}
+
 .font-small {
 font-size: small !important;
 }
@@ -658,4 +675,40 @@ font-size: x-small !important;
     .relatorio{
         margin: 20px !important;
     }
+
+    .cv-card {
+        height: 1500px;
+    }
+
+    .cv-left-side {
+        height: 1500px;
+    }
+
+    .cv-right-side {
+        height: 1500px;
+    }
+}
+
+.cv-left-side {
+    background-color: #00062f;
+}
+
+.cv-right-side {
+    background-color: #ffffff;
+}
+
+.cv-text {
+    font-size: 16px;
+}
+
+.cv-subtitle {
+    font-size: 24px;
+}
+
+.cv-name {
+    font-weight: bolder;
+}
+
+.cv-left-side .cv-text, .cv-left-side .cv-name, .cv-left-side .cv-subtitle {
+    color: #fff !important;
 }

@@ -24,6 +24,16 @@ class TafController extends Controller
 
     public function index()
     {
+        switch (date('m')) {
+            case date('m') > 3:
+                $data_inicio = date((date('Y')).'-03-01');
+                $data_final = date((date('Y')+1).'-03-01');
+                break;  
+            case date('m') <= 3:
+                $data_inicio = date((date('Y')-1).'-03-01');
+                $data_final = date((date('Y')).'-03-01');
+                break;      
+        }
         $user_auth = Auth::user();
         $user = User::findOrFail($user_auth->id);
 
@@ -31,7 +41,7 @@ class TafController extends Controller
             $tafs_realizados = TafNumero::whereIn(
                 'id',
                 Taf::select('taf_numero_id')
-                    ->whereYear('created_at', date('Y'))
+                    ->whereBetween('tafs.created_at', [$data_inicio, $data_final])
                     ->groupBy('taf_numero_id')
                     ->get()
                     ->toArray(),
@@ -40,7 +50,7 @@ class TafController extends Controller
             $tafs_realizados = TafNumero::whereIn(
                 'id',
                 Taf::select('taf_numero_id')
-                    ->whereYear('tafs.created_at', date('Y'))
+                    ->whereBetween('tafs.created_at', [$data_inicio, $data_final])
                     ->groupBy('taf_numero_id')
                     ->join('militars', 'tafs.militar_id', '=', 'militars.id')
                     ->where('subunidade_id', $user->subunidade_id)
@@ -58,10 +68,10 @@ class TafController extends Controller
         $user_auth = Auth::user();
         $user = User::findOrFail($user_auth->id);
         if (Auth::user()->hasRole('Admin')) {
-            $publicacoes_taf = Taf::getPublicacoesDeTaf(date('Y'), $id);
+            $publicacoes_taf = Taf::getPublicacoesDeTaf($id);
             $subunidade_id = null;
         } else {
-            $publicacoes_taf = Taf::getPublicacoesDeTaf(date('Y'), $id, $user->subunidade_id);
+            $publicacoes_taf = Taf::getPublicacoesDeTaf($id, $user->subunidade_id);
             $subunidade_id = $user->subunidade_id;
         }
         $taf_numero = TafNumero::find($id);

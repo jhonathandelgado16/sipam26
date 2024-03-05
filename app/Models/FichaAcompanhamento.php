@@ -27,6 +27,10 @@ class FichaAcompanhamento extends Model
         'possui_cnh',
         'categoria_cnh',
         'conducao_motocicleta',
+        'qtd_irmaos',
+        'renda_familiar',
+        'objetivo de vida',
+        'lazer',
         'militar_id',
     ];
 

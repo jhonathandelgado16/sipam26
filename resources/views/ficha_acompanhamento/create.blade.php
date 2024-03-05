@@ -89,11 +89,11 @@
                             <div class="col-10 margin-bottom-10">
                                 <div class="row">
                                     <div class="col-8 text-left">
-                                        <h4 class=""><b>Nome da Esposa:</b></h4>
+                                        <h4 class=""><b>Nome da Esposa/Namorada:</b></h4>
                                         {!! Form::text('nome_esposa', null, ['placeholder' => 'Digite o nome', 'class' => 'form-control margin-side-5 font-small']) !!}
                                     </div>
                                     <div class="col-4 text-left">
-                                        <h4 class=""><b>Contato da Esposa:</b></h4>
+                                        <h4 class=""><b>Contato da Esposa/Namorada:</b></h4>
                                         {!! Form::text('contato_esposa', null, ['placeholder' => 'Digite o contato', 'class' => 'form-control font-small']) !!}
                                     </div>
                                 </div>
@@ -119,6 +119,34 @@
                                     <div class="col-4 text-left">
                                         <h4 class=""><b>Contato da Mãe ou Responsável:</b></h4>
                                         {!! Form::text('contato_mae', null, ['placeholder' => 'Digite o contato', 'class' => 'form-control font-small']) !!}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-10 margin-bottom-10">
+                                <div class="row">
+                                    <div class="col-3 text-left">
+                                        <h4 class=""><b>Quantidade de Irmãos:</b></h4>
+                                        {!! Form::number('qtd_irmaos', 0, ['placeholder' => 'nº de irmãos', 'class' => 'form-control margin-side-5 font-small']) !!}
+                                    </div>
+                                    <div class="col-3 text-left">
+                                        <h4 class=""><b>Média de Renda Familiar:</b></h4>
+                                        {!! Form::number('renda_familiar', null, ['placeholder' => 'Média renda familiar R$', 'class' => 'form-control font-small']) !!}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-10 margin-bottom-10">
+                                <div class="row">
+                                    <div class="col-12 text-left">
+                                        <h4 class=""><b>Objetivos de Vida:</b></h4>
+                                        <textarea class="form-control" name="objetivo_de_vida" id="" cols="1" rows="3"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-10 margin-bottom-10">
+                                <div class="row">
+                                    <div class="col-12 text-left">
+                                        <h4 class=""><b>Lazer:</b></h4>
+                                        <textarea class="form-control" name="lazer" id="" cols="1" rows="1"></textarea>
                                     </div>
                                 </div>
                             </div>

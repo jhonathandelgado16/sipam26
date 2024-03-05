@@ -28,6 +28,7 @@ use App\Http\Controllers\FracaoController;
 use App\Http\Controllers\PublicacaoController;
 use App\Http\Controllers\TafMencaoController;
 use App\Http\Controllers\TafNumeroController;
+use App\Http\Controllers\SocialVisitaController;
 use App\Models\CategoriaAvaliacao;
 use App\Models\FichaAcompanhamento;
 use App\Models\SocialVisita;
@@ -120,6 +121,13 @@ Route::group(['middleware' => ['auth']], function() {
     Route::patch('ficha_sipam/cadastrar_escolaridade/update/{id}', '\App\Http\Controllers\MilitarEscolaridadeController@update')->name('ficha_sipam.escolaridade_update');
     Route::delete('ficha_sipam/cadastrar_escolaridade/delete/{id}', '\App\Http\Controllers\MilitarEscolaridadeController@destroy')->name('ficha_sipam.escolaridade_delete');
 
+    Route::get('ficha_sipam/demerito/{id}', '\App\Http\Controllers\MilitarDemeritoController@index')->name('ficha_sipam.demerito_index');
+    Route::get('ficha_sipam/cadastrar_demerito/{id}', '\App\Http\Controllers\MilitarDemeritoController@create')->name('ficha_sipam.demerito_create');
+    Route::get('ficha_sipam/cadastrar_demerito/{id}/editar', '\App\Http\Controllers\MilitarDemeritoController@edit')->name('ficha_sipam.demerito_edit');
+    Route::post('ficha_sipam/cadastrar_demerito/', '\App\Http\Controllers\MilitarDemeritoController@store')->name('ficha_sipam.demerito_store');
+    Route::patch('ficha_sipam/cadastrar_demerito/update/{id}', '\App\Http\Controllers\MilitarDemeritoController@update')->name('ficha_sipam.demerito_update');
+    Route::delete('ficha_sipam/cadastrar_demerito/delete/{id}', '\App\Http\Controllers\MilitarDemeritoController@destroy')->name('ficha_sipam.demerito_delete');
+
     Route::get('ficha_sipam/curso/{id}', '\App\Http\Controllers\MilitarCursoController@index')->name('ficha_sipam.curso_index');
     Route::get('ficha_sipam/cadastrar_curso/{id}', '\App\Http\Controllers\MilitarCursoController@create')->name('ficha_sipam.curso_create');
     Route::post('ficha_sipam/cadastrar_curso/', '\App\Http\Controllers\MilitarCursoController@store')->name('ficha_sipam.curso_store');
@@ -176,5 +184,10 @@ Route::group(['middleware' => ['auth']], function() {
     Route::patch('avaliacao/edit', '\App\Http\Controllers\AvaliacaoController@update')->name('avaliacao.update');
     Route::get('avaliacao/aprovar/{militar_id}', '\App\Http\Controllers\AvaliacaoController@aprovar')->name('avaliacao.aprovar');
     Route::patch('avaliacao/aprovar', '\App\Http\Controllers\AvaliacaoController@aprovar_update')->name('avaliacao.aprovar_update');
+
+    Route::get('ranking/', '\App\Http\Controllers\RankingController@index')->name('ranking.index');
+    Route::get('ranking/atualizar', '\App\Http\Controllers\RankingController@atualizar')->name('ranking.atualizar');
+
+    Route::get('desmobilizacao/curriculo/{militar_id}', '\App\Http\Controllers\DesmobilizacaoController@curriculo')->name('desmobilizacao.curriculo');
 });
 

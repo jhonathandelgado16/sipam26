@@ -59,18 +59,14 @@
 
     <table class="table text-center card-sipam">
         <tr>
-            <th>P/G</th>
-            <th>Número</th>
-            <th>Nome de Guerra</th>
-            <th width="600px">Ações</th>
+            <th>Militar</th>
+            <th width="800px">Ações</th>
         </tr>
 
         @if ($militares->isNotEmpty())
             @foreach ($militares as $key => $militar)
                 <tr>
-                    <td>{{ $militar->posto->posto }}</td>
-                    <td>{{ $militar->numero }}</td>
-                    <td>{{ $militar->nome_de_guerra }}</td>
+                    <td>{{ $militar->getMilitar() }}</td>
                     <td>
                         @can('militar-edit')
                             <a class="btn btn-white" href="{{ route('militares.edit', $militar->id) }}"><img
@@ -79,6 +75,8 @@
                                     src="{{ url('storage/icons/SIPAM26.png') }}" height="20"> Ficha SIPAM</a>
                             <a class="btn btn-red" href="{{ route('ficha_acompanhamentos.index', $militar->id) }}"><ion-icon
                                     name="people"></ion-icon> Ficha de Acompanhamento</a>
+                            <a class="btn btn-white" target="_blank" href="{{ route('desmobilizacao.curriculo', $militar->id) }}"><ion-icon
+                                    name="newspaper"></ion-icon> Curriculo</a>
                         @endcan
                         @can('militar-caderneta')
                             <a class="btn btn-green" href="{{ route('caderneta.ficha', $militar->id) }}"><img

@@ -9,6 +9,7 @@ use App\Models\Militar;
 use App\Models\MilitaresFracao;
 use App\Models\Pelotao;
 use App\Models\Posto;
+use App\Models\QualificacaoMilitar;
 use App\Models\Subunidade;
 use App\Models\User;
 use Spatie\Permission\Models\Role;
@@ -37,17 +38,20 @@ class MilitarController extends Controller
         $user = User::findOrFail($user_auth->id);
         if (Auth::user()->hasRole('Admin')) {
             $militares = Militar::select('militars.id', 'numero', 'nome_de_guerra', 'posto_id', 'antiguidade')->join('postos', 'militars.posto_id', '=', 'postos.id')->
-            orderBy('antiguidade', 'ASC')->orderBy('numero', 'ASC')->limit(100)->get();   
+            orderBy('antiguidade', 'ASC')->orderBy('numero', 'ASC')->limit(100);   
         } elseif(Auth::user()->hasRole('Cmt Fração')) {
             $militares = Militar::Select('militars.id', 'numero', 'nome_de_guerra', 'posto_id', 'antiguidade')->join('postos', 'militars.posto_id', '=', 'postos.id')->
-            orderBy('antiguidade', 'ASC')->orderBy('numero')->whereIn('militars.id', MilitaresFracao::select('militar_id')->whereIn('fracao_id', (Fracao::select('id')->where('user_id', $user->id)->get()->toArray()))->get()->toArray())->get();
+            orderBy('antiguidade', 'ASC')->orderBy('numero')->whereIn('militars.id', MilitaresFracao::select('militar_id')->whereIn('fracao_id', (Fracao::select('id')->where('user_id', $user->id)->get()->toArray()))->get()->toArray());
         } else {
             $militares = Militar::Select('militars.id', 'numero', 'nome_de_guerra', 'posto_id', 'antiguidade')->join('postos', 'militars.posto_id', '=', 'postos.id')->
-            orderBy('antiguidade', 'ASC')->orderBy('numero')->where('subunidade_id', $user->subunidade_id)->get();
+            orderBy('antiguidade', 'ASC')->orderBy('numero')->where('subunidade_id', $user->subunidade_id);
         }
+
+        $militares = $militares->where('situacao', 'ativa')->get();
 
         return view('militares.index',compact('user_auth', 'militares', 'subunidades', 'search', 'search_su'));
     }
+
     public function procurar(Request $request)
     {
         $search = $request->input('search');
@@ -59,21 +63,19 @@ class MilitarController extends Controller
         $user = User::findOrFail($user_auth->id);
         if (Auth::user()->hasRole('Admin')) {
             $militares = Militar::where('nome_de_guerra', 'LIKE', "%{$search}%")
-            ->orWhere('numero', 'LIKE', "%{$search}%")->orderBy('numero')
-            ->get();
+            ->orWhere('numero', 'LIKE', "%{$search}%")->orderBy('numero');
         } elseif(Auth::user()->hasRole('Cmt Fração')) {
             $militares = Militar::Select('militars.id', 'numero', 'nome_de_guerra', 'posto_id', 'antiguidade')->join('postos', 'militars.posto_id', '=', 'postos.id')->
-            orderBy('antiguidade', 'ASC')->orderBy('numero')->whereIn('militars.id', MilitaresFracao::select('militar_id')->whereIn('fracao_id', (Fracao::select('id')->where('user_id', $user->id)->get()->toArray()))->get()->toArray())->where('nome_de_guerra', 'LIKE', "%{$search}%")
-            ->get();
+            orderBy('antiguidade', 'ASC')->orderBy('numero')->whereIn('militars.id', MilitaresFracao::select('militar_id')->whereIn('fracao_id', (Fracao::select('id')->where('user_id', $user->id)->get()->toArray()))->get()->toArray())->where('nome_de_guerra', 'LIKE', "%{$search}%");
         }
         else {
             $militares = Militar::where('subunidade_id', $user->subunidade_id)->orWhere('nome_de_guerra', 'LIKE', "%{$search}%")
-            ->orWhere('numero', 'LIKE', "%{$search}%")->orderBy('numero')
-            ->get();
+            ->orWhere('numero', 'LIKE', "%{$search}%")->orderBy('numero');
 
-            $militares = Militar::whereRaw('(nome_de_guerra LIKE "%'.$search.'%" OR numero LIKE "%'.$search.'%") and subunidade_id = '.$user->subunidade_id.'')->orderBy('numero')->get();
+            $militares = Militar::whereRaw('(nome_de_guerra LIKE "%'.$search.'%" OR numero LIKE "%'.$search.'%") and subunidade_id = '.$user->subunidade_id.'')->orderBy('numero', 'ASC');
         }
 
+        $militares = $militares->where('situacao', 'ativa')->get();
 
         return view('militares.index',compact('user_auth', 'militares', 'subunidades', 'search', 'search_su'));
     }
@@ -87,7 +89,7 @@ class MilitarController extends Controller
         $subunidades = Subunidade::all();
 
         $militares = Militar::select('militars.id', 'numero', 'nome_de_guerra', 'posto_id', 'antiguidade')->where('subunidade_id', $su)->join('postos', 'militars.posto_id', '=', 'postos.id')->
-            orderBy('antiguidade', 'ASC')->orderBy('numero')->get();        
+            orderBy('antiguidade', 'ASC')->orderBy('numero', 'asc')->where('situacao', 'ativa')->get();        
         return view('militares.index',compact('user_auth', 'militares', 'su', 'search', 'subunidades', 'search_su'));
     }
 
@@ -96,7 +98,8 @@ class MilitarController extends Controller
         $postos = Posto::all();
         $subunidades = Subunidade::all();
         $pelotoes = Pelotao::all();
-        return view('militares.create',compact('postos', 'subunidades', 'pelotoes'));
+        $qms = QualificacaoMilitar::all();
+        return view('militares.create',compact('postos', 'subunidades', 'pelotoes', 'qms'));
     }
 
     public function create()
@@ -104,7 +107,8 @@ class MilitarController extends Controller
         $postos = Posto::orderBy('antiguidade', 'ASC')->get();
         $subunidades = Subunidade::all();
         $pelotoes = Pelotao::all();
-        return view('militares.create',compact('postos', 'subunidades', 'pelotoes'));
+        $qms = QualificacaoMilitar::all();
+        return view('militares.create',compact('postos', 'subunidades', 'pelotoes', 'qms'));
     }
 
     public function store(Request $request)
@@ -120,6 +124,7 @@ class MilitarController extends Controller
             'pelotao_id' => 'required',
             'subunidade_id' => 'required',
             'data_nascimento' => 'required',
+            'qualificacao_militar_id' => 'required',
             'turma' => 'required',
         ]);
 
@@ -127,7 +132,7 @@ class MilitarController extends Controller
         'numero' => $request->input('numero'), 'cpf' => $request->input('cpf'), 'idt_militar' => $request->input('idt_militar'),
         'endereco' => $request->input('endereco'), 'contato' => $request->input('contato'), 'responsavel' => $request->input('responsavel'),
          'posto_id' => $request->input('posto_id'), 'pelotao_id' => $request->input('pelotao_id'), 'subunidade_id' => $request->input('subunidade_id'),
-         'tipo_sanguineo' => $request->input('tipo_sanguineo'), 'data_nascimento' => $request->input('data_nascimento'), 'turma' => $request->input('turma')]);
+         'tipo_sanguineo' => $request->input('tipo_sanguineo'), 'data_nascimento' => $request->input('data_nascimento'), 'turma' => $request->input('turma'), 'qualificacao_militar_id' => $request->input('qualificacao_militar_id')]);
 
         return redirect()->route('militares.index')
                         ->with('success','Militar cadastrada com sucesso!');
@@ -139,7 +144,8 @@ class MilitarController extends Controller
         $postos = Posto::all();
         $subunidades = Subunidade::all();
         $pelotoes = Pelotao::all();
-        return view('militares.edit',compact('militar','postos', 'subunidades', 'pelotoes'));
+        $qms = QualificacaoMilitar::all();
+        return view('militares.edit',compact('militar','postos', 'subunidades', 'pelotoes', 'qms'));
     }
 
 
@@ -158,6 +164,7 @@ class MilitarController extends Controller
             'pelotao_id' => 'required',
             'subunidade_id' => 'required',
             'data_nascimento' => 'required',
+            'qualificacao_militar_id' => 'required',
             'turma' => 'required',
         ]);
 
@@ -177,6 +184,7 @@ class MilitarController extends Controller
         $militar->data_nascimento = $request->input('data_nascimento');
         $militar->tipo_sanguineo = $request->input('tipo_sanguineo');
         $militar->turma = $request->input('turma');
+        $militar->qualificacao_militar_id = $request->input('qualificacao_militar_id');
 
         $militar->save();
 

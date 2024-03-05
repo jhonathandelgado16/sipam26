@@ -14,6 +14,16 @@ class TafNumero extends Model
 
     public function getQtdMencoes($mencao)
     {
+        switch (date('m')) {
+            case date('m') > 3:
+                $data_inicio = date((date('Y')).'-03-01');
+                $data_final = date((date('Y')+1).'-03-01');
+                break;  
+            case date('m') <= 3:
+                $data_inicio = date((date('Y')-1).'-03-01');
+                $data_final = date((date('Y')).'-03-01');
+                break;      
+        }
         
         $user_auth = Auth::user();
         $user = User::findOrFail($user_auth->id);
@@ -22,13 +32,13 @@ class TafNumero extends Model
 
         $qtd = Taf::where('taf_mencao_id', TafMencao::where('mencao', strtoupper($mencao))->first()->id)
             ->where('taf_numero_id', $this->id)
-            ->whereYear('created_at', date('Y'))
+            ->whereBetween('tafs.created_at', [$data_inicio, $data_final])
             ->count();
 
         } else {
             $qtd = Taf::where('taf_mencao_id', TafMencao::where('mencao', strtoupper($mencao))->first()->id)
             ->where('taf_numero_id', $this->id)
-            ->whereYear('tafs.created_at', date('Y'))
+            ->whereBetween('tafs.created_at', [$data_inicio, $data_final])
             ->join('militars', 'tafs.militar_id', '=', 'militars.id')
             ->where('subunidade_id', $user->subunidade_id)
             ->count();

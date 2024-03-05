@@ -19,16 +19,27 @@ class MilitarCursoController extends Controller
 
     public function index($id)
     {
+        switch (date('m')) {
+            case date('m') >= 3:
+                $data_inicio = date((date('Y')).'-03-01');
+                $data_final = date((date('Y')+1).'-03-01');
+                break;  
+            case date('m') <= 3:
+                $data_inicio = date((date('Y')-1).'-03-01');
+                $data_final = date((date('Y')).'-03-01');
+                break;      
+        }
+        
         $user_auth = Auth::user();
         $militar = Militar::find($id);
         $cursos_pontuando = MilitarCurso::where('militar_id', $id)
             ->where('pontuando', 1)
-            ->whereYear('data_conclusao', '=', date('Y'))
+            ->whereBetween('data_conclusao', [$data_inicio, $data_final])
             ->get();
         $cursos_nao_pontuando = MilitarCurso::where('militar_id', $id)
             ->where('pontuando', '!=', 1)
             ->orwhere('militar_id', $id)
-            ->whereYear('data_conclusao', '!=', date('Y'))
+            ->whereYear('data_conclusao', '<', $data_inicio)
             ->get();
         return view('ficha_sipam.cursos.index', compact('militar', 'cursos_pontuando', 'cursos_nao_pontuando'));
     }

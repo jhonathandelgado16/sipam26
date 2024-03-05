@@ -53,7 +53,7 @@ class FichaInstrucaoIndividualBasicaController extends Controller
     {
         $user_auth = Auth::user();
         $militar = Militar::find($id);
-        $objetivos_dentro_da_fiib = ObjetivoInstrucao::where('dentro_da_fiib', '1')->get();
+        $objetivos_dentro_da_fiib = ObjetivoInstrucao::where('dentro_da_fiib', '1')->orderBy('materia', 'asc')->orderBy('identificacao', 'asc')->get();
         return view('caderneta.fiib.preencher', compact('objetivos_dentro_da_fiib', 'militar', 'user_auth'));
     }
 
