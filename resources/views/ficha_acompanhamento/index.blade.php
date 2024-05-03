@@ -87,7 +87,7 @@
             <div class="row justify-content-center">
                 <div class="col-12 row margin-bottom-5 justify-content-center no-margin">
                     <div class="row subtitle-acompanhamento">
-                        <h2 class="col-10">Dados Familiares</h2>
+                        <h2 class="col-10">Ficha de entrevista</h2>
                         @if ($ficha)
                             <a class=" col-2 btn btn-acompanhamento font-small"
                                 href="{{ route('ficha_acompanhamentos.edit', $militar->id) }}"> Editar dados <ion-icon
@@ -192,7 +192,7 @@
             </div>
         </div>
 
-        <div class="col-12">
+        <div class="col-12 d-none">
             <div class="row justify-content-center">
                 <div class="col-12 row margin-bottom-5 justify-content-center no-margin">
                     <div class="row subtitle-acompanhamento">
@@ -438,7 +438,7 @@
             </div>
         </div>
 
-        <div class="col-6">
+        <div class="col-12">
             <div class="row">
                 <div class="col-12 row margin-bottom-5 justify-content-center no-margin">
                     <div class="row subtitle-acompanhamento">
@@ -479,7 +479,7 @@
             </div>
         </div>
 
-        <div class="col-6">
+        <div class="col-6 d-none">
             <div class="row">
                 <div class="col-12 row margin-bottom-5 justify-content-center no-margin">
                     <div class="row subtitle-acompanhamento">

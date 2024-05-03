@@ -42,14 +42,16 @@ class HomeController extends Controller
         $user = User::findOrFail($user_auth->id);
         if (Auth::user()->hasRole('Admin')) {
             $militares = Militar::select('militars.id', 'numero', 'nome_de_guerra', 'posto_id', 'antiguidade')->join('postos', 'militars.posto_id', '=', 'postos.id')->
-            orderBy('antiguidade', 'ASC')->orderBy('numero', 'ASC')->limit(100)->get();   
+            orderBy('antiguidade', 'ASC')->orderBy('numero', 'ASC')->limit(100);   
         } elseif(Auth::user()->hasRole('Cmt Fração')) {
             $militares = Militar::Select('militars.id', 'numero', 'nome_de_guerra', 'posto_id', 'antiguidade')->join('postos', 'militars.posto_id', '=', 'postos.id')->
-            orderBy('antiguidade', 'ASC')->orderBy('numero')->whereIn('militars.id', MilitaresFracao::select('militar_id')->whereIn('fracao_id', (Fracao::select('id')->where('user_id', $user->id)->get()->toArray()))->get()->toArray())->get();
+            orderBy('antiguidade', 'ASC')->orderBy('numero')->whereIn('militars.id', MilitaresFracao::select('militar_id')->whereIn('fracao_id', (Fracao::select('id')->where('user_id', $user->id)->get()->toArray()))->get()->toArray());
         } else {
             $militares = Militar::Select('militars.id', 'numero', 'nome_de_guerra', 'posto_id', 'antiguidade')->join('postos', 'militars.posto_id', '=', 'postos.id')->
-            orderBy('antiguidade', 'ASC')->orderBy('numero')->where('subunidade_id', $user->subunidade_id)->get();
+            orderBy('antiguidade', 'ASC')->orderBy('numero')->where('subunidade_id', $user->subunidade_id);
         }
+
+        $militares = $militares->where('situacao', 'ativa')->get();
 
 
         return view('militares.index',compact('user_auth', 'militares', 'subunidades', 'search', 'search_su'));

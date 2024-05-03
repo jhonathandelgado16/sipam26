@@ -29,7 +29,7 @@ class FichaAcompanhamento extends Model
         'conducao_motocicleta',
         'qtd_irmaos',
         'renda_familiar',
-        'objetivo de vida',
+        'objetivo_de_vida',
         'lazer',
         'militar_id',
     ];

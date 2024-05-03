@@ -128,7 +128,7 @@
                                         <h4 class=""><b>Quantidade de Irmãos:</b></h4>
                                         {!! Form::number('qtd_irmaos', 0, ['placeholder' => 'nº de irmãos', 'class' => 'form-control margin-side-5 font-small']) !!}
                                     </div>
-                                    <div class="col-3 text-left">
+                                    <div class="col-5 text-left">
                                         <h4 class=""><b>Média de Renda Familiar:</b></h4>
                                         {!! Form::number('renda_familiar', null, ['placeholder' => 'Média renda familiar R$', 'class' => 'form-control font-small']) !!}
                                     </div>
@@ -138,7 +138,7 @@
                                 <div class="row">
                                     <div class="col-12 text-left">
                                         <h4 class=""><b>Objetivos de Vida:</b></h4>
-                                        <textarea class="form-control" name="objetivo_de_vida" id="" cols="1" rows="3"></textarea>
+                                        <textarea class="form-control" name="objetivo_de_vida" id="" cols="1" rows="1"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -174,12 +174,12 @@
                                     <div class="col-12 row justify-content-center">
                                         <div class="col-4">
                                             <input class="form-check-input font-small" type="radio" name="acidentes_atividades_militares"
-                                                id="acidentes_atividades_militares_sim" value="1" checked>
+                                                id="acidentes_atividades_militares_sim" value="1">
                                             <label class="form-check-label font-small" for="acidentes_atividades_militares_sim">Sim</label>
                                         </div>
                                         <div class="col-4">
                                             <input class="form-check-input font-small" type="radio" name="acidentes_atividades_militares"
-                                                id="acidentes_atividades_militares_nao" value="2">
+                                                id="acidentes_atividades_militares_nao" value="2" checked> 
                                             <label class="form-check-label font-small" for="acidentes_atividades_militares_nao">Não</label>
                                         </div>
                                         <div class="col-4">
@@ -212,12 +212,12 @@
                                     <div class="col-12 row justify-content-center">
                                         <div class="col-4">
                                             <input class="form-check-input font-small" type="radio" name="acidentes_automobilisticos"
-                                                id="acidentes_automobilisticos_sim" value="1" checked>
+                                                id="acidentes_automobilisticos_sim" value="1">
                                             <label class="form-check-label font-small" for="acidentes_automobilisticos_sim">Sim</label>
                                         </div>
                                         <div class="col-4">
                                             <input class="form-check-input font-small" type="radio" name="acidentes_automobilisticos"
-                                                id="acidentes_automobilisticos_nao" value="2">
+                                                id="acidentes_automobilisticos_nao" value="2" checked>
                                             <label class="form-check-label font-small" for="acidentes_automobilisticos_nao">Não</label>
                                         </div>
                                         <div class="col-4">
@@ -249,12 +249,12 @@
                                     <div class="col-12 row justify-content-center">
                                         <div class="col-2">
                                             <input class="form-check-input font-small" type="radio" name="possui_cnh"
-                                                id="possui_cnh_sim" value="1" checked>
+                                                id="possui_cnh_sim" value="1">
                                             <label class="form-check-label font-small" for="possui_cnh_sim">Sim</label>
                                         </div>
                                         <div class="col-2">
                                             <input class="form-check-input font-small" type="radio" name="possui_cnh"
-                                                id="possui_cnh_nao" value="2">
+                                                id="possui_cnh_nao" value="2" checked>
                                             <label class="form-check-label font-small" for="possui_cnh_nao">Não</label>
                                         </div>
                                     </div>
@@ -334,13 +334,13 @@
             </div>
         </div>
 
-        <div class="row" id="first-form">
+        <div class="row d-none" id="first-form">
             <button type="button" class="offset-9 col-3 btn btn-white" id="proximo">Continuar preenchendo</button>
         </div>
 
-        <div class="row d-none" id="second-form">
-            <button type="button" class="col-3 btn btn-danger" id="anterior">Anterior</button>
-            <button class="offset-6 col-3 btn btn-primary" type="submit" id="concluir">Concluir</button>
+        <div class="row" id="second-form">
+            <button type="button" class="col-3 btn btn-danger d-none" id="anterior">Anterior</button>
+            <button class="offset-9 col-3 btn btn-primary" type="submit" id="concluir">Concluir</button>
         </div>
         </div>
         {!! Form::close() !!}
