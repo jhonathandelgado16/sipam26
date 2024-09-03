@@ -7,7 +7,7 @@
             <h2>Editar Objetivos Individuais das Instruções</h2>
         </div>
         <div class="pull-right">
-            <a class="btn btn-white" href="{{ route('subunidades.index') }}"><img src="{{url('storage/icons/back.png')}}" height="20"> Voltar</a>
+            <a class="btn btn-white" href="{{ route('objetivos_instrucoes.index') }}"><img src="{{url('storage/icons/back.png')}}" height="20"> Voltar</a>
         </div>
     </div>
 </div>
@@ -31,17 +31,40 @@
         <div class="form-group row justify-content-center">
             <div class="col-2">
                 <strong>Matéria:</strong>
-                {!! Form::text('materia', null, array('placeholder' => 'Ex: 1.','class' => 'form-control col-3')) !!}
+                {!! Form::text('materia', null, array('placeholder' => 'Ex: 1.','class' => 'form-control')) !!}
             </div>
 
             <div class="col-2">
                 <strong>Identificacao:</strong>
-                {!! Form::text('identificacao', null, array('placeholder' => 'Ex: B-101','class' => 'form-control col-3')) !!}
+                {!! Form::text('identificacao', null, array('placeholder' => 'Ex: B-101','class' => 'form-control')) !!}
             </div>
 
             <div class="col-4">
                 <strong>Referência:</strong>
                 {!! Form::text('referencia', null, array('placeholder' => 'Ex: EB70-PP-11.011','class' => 'form-control')) !!}
+            </div>
+
+            <div class="col-4">
+                <strong>Definir qual QM do Objetivo Individual:</strong>
+                <select name="dentro_da_fiib" class="form-select">
+                    <option value="0" @if($objetivo_instrucao->dentro_da_fiib == 0) selected @endif>
+                        Inativo
+                    </option>
+                    <option value="50" @if($objetivo_instrucao->dentro_da_fiib == 50) selected @endif>
+                        Instrução Individual de Qualificação
+                    </option>
+                    @foreach ($qms as $qm)
+                    @if($objetivo_instrucao->dentro_da_fiib == $qm->id)
+                                <option value="{{$qm->id}}" selected>
+                                    {{$qm->qualificacao . ' - ' . $qm->descricao}}
+                                </option>
+                            @else
+                                <option value="{{$qm->id}}">
+                                    {{$qm->qualificacao . ' - ' . $qm->descricao}}
+                                </option>
+                            @endif
+                    @endforeach
+                </select>
             </div>
         </div>
     </div>

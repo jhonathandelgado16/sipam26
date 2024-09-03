@@ -56,12 +56,19 @@
                     {!! Form::text('nome', null, array('placeholder' => 'Nome','class' => 'form-control')) !!}
                 </div>
 
+
                 <div class="col-4">
                     <strong>Data de Nascimento</strong>
                     <input type="date" name="data_nascimento" class="form-control" id="">
                 </div>
 
-                <div class="col-6">
+
+                <div class="col-4">
+                    <strong>Turma/Ano de Incorporação:</strong>
+                    {!! Form::number('turma', null, array('placeholder' => 'Turma','class' => 'form-control', 'min'=> (intval(date('Y')-8)),'max'=>date('Y')),) !!}
+                </div>
+
+                <div class="col-2">
                     <strong>Subunidade:</strong>
                     <select name="subunidade_id" class="form-select">
                         @foreach ($subunidades as $key => $subunidade)
@@ -72,12 +79,23 @@
                     </select>
                 </div>
 
-                <div class="col-6">
+                <div class="col-3">
                     <strong>Pelotão:</strong>
                     <select name="pelotao_id" class="form-select">
                         @foreach ($pelotoes as $key => $pelotao)
                         <option value="{{$pelotao->id}}">
                             {{$pelotao->pelotao}}
+                        </option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="col-3">
+                    <strong>Arma/QM:</strong>
+                    <select name="qualificacao_militar_id" class="form-select">
+                        @foreach ($qms as $qm)
+                        <option value="{{$qm->id}}">
+                            {{$qm->qualificacao . ' - ' . $qm->descricao}}
                         </option>
                         @endforeach
                     </select>

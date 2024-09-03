@@ -3,7 +3,7 @@
 @section('content')
     <div class="row margin-bottom-15">
         <div class="pull-right col-8">
-            <a class="btn btn-white" href="{{ route('ficha_sipam.index', $militar->id) }}"><img
+            <a class="btn btn-white" href="{{ route('ficha_sipam.escolaridade_index', $militar->id) }}"><img
                     src="{{ url('storage/icons/back.png') }}" height="20"> Voltar</a>
         </div>
     </div>

@@ -256,6 +256,66 @@
 
         </div>
 
+        @if ($militar->qualificacao_militar->qualificacao != 'RECRUTA')        
+        <div class="col-12 row margin-bottom-10">
+            <div class="row title-caderneta">
+                <h2 class="col-8">Ficha da Instrução Individual de Qualificação</h2>
+                    <a class="col-2 btn btn-caderneta" href="{{ route('fiiq.preencher', $militar->id) }}">Preencher
+                        FIIQ</a>
+                    <a target="_blank" class="col-2 btn btn-caderneta" href="{{ route('fiiq.pdf', $militar->id) }}">Gerar
+                        PDF FIIQ</a>
+            </div>
+
+            @if ($resultados_fiiq->isNotEmpty())
+                @php
+                    $valor_chunk = 1;
+                    if (count($resultados_fiiq) > 5) {
+                        $valor_chunk = ceil(count($resultados_fiiq) / 5);
+                    }
+                    $grupoResultados = $resultados_fiiq->chunk($valor_chunk);
+                @endphp
+
+                @foreach ($grupoResultados as $grupo)
+                    <div class="col font-small">
+                        <div class="row item-oii text-center fiib-thead">
+                            <div class="col-5">Identificação</div>
+                            <div class="col-7">
+                                Padrão Mínimo
+                            </div>
+                        </div>
+
+                        @foreach ($grupo as $key => $resultado)
+                            <div class="row item-oii text-center">
+                                <div class="col-5">{{ $resultado->objetivo_instrucao->getOII() }}</div>
+                                <div class="col-7 text-center">
+                                    @if ($resultado->padrao_minimo_atingido == 1)
+                                        <b class="color-green">
+                                            <ion-icon name="checkmark-circle"></ion-icon>
+                                        </b>
+                                    @else
+                                        <b class="color-red">
+                                            <ion-icon name="close-circle"></ion-icon>
+                                        </b>
+                                    @endif
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                @endforeach
+            @else
+                <div class="row card-fo">
+                    <div class="col-12 row">
+                        <h4 class="col-12 text-center">
+                            O militar não possui informações da FIIQ
+                        </h4>
+                    </div>
+                </div>
+            @endif
+
+        </div>
+    
+    @endif
+
         <div class="col-12 row margin-bottom-10">
             <div class="row title-caderneta">
                 <h2 class="col-9">Ficha de Avaliação de Atributos</h2>

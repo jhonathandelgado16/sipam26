@@ -84,15 +84,20 @@
                     {!! Form::text('nome_de_guerra', null, array('placeholder' => 'Nome de Guerra','class' => 'form-control')) !!}
                 </div>
 
-                <div class="col-12">
+                <div class="col-9">
                     <strong>Nome:</strong>
                     {!! Form::text('nome', null, array('placeholder' => 'Nome','class' => 'form-control')) !!}
                 </div>
 
-                <div class="col-6">
+                <div class="col-3">
+                    <strong>Turma/Ano de Incorporação:</strong>
+                    {!! Form::number('turma', null, array('placeholder' => 'Turma','class' => 'form-control', 'min'=> (intval(date('Y')-8)),'max'=>date('Y')),) !!}
+                </div>
+
+                <div class="col-4">
                     <strong>Subunidade:</strong>
                     <select name="subunidade_id" class="form-select">
-                        @foreach ($subunidades as $key => $subunidade)
+                        @foreach ($subunidades as $subunidade)
                             @if($militar->subunidade_id == $subunidade->id)
                                 <option value="{{$subunidade->id}}" selected>
                                     {{$subunidade->nome}}
@@ -106,10 +111,27 @@
                     </select>
                 </div>
 
-                <div class="col-6">
+                <div class="col-4">
+                    <strong>Arma/QM:</strong>
+                    <select name="qualificacao_militar_id" class="form-select">
+                        @foreach ($qms as $qm)
+                            @if($militar->qualificacao_militar_id == $qm->id)
+                                <option value="{{$qm->id}}" selected>
+                                    {{$qm->qualificacao . ' - ' . $qm->descricao}}
+                                </option>
+                            @else
+                                <option value="{{$qm->id}}">
+                                    {{$qm->qualificacao . ' - ' . $qm->descricao}}
+                                </option>
+                            @endif
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="col-4">
                     <strong>Pelotão:</strong>
                     <select name="pelotao_id" class="form-select">
-                        @foreach ($pelotoes as $key => $pelotao)
+                        @foreach ($pelotoes AS $pelotao)
                             @if($militar->pelotao_id == $pelotao->id)
                                 <option value="{{$pelotao->id}}" selected>
                                     {{$pelotao->pelotao}}

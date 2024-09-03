@@ -20,7 +20,7 @@ class MilitarEscolaridadeController extends Controller
     {
         $user_auth = Auth::user();
         $militar = Militar::find($id);
-        $escolaridades = MilitarEscolaridade::where('militar_id', $id)->get();
+        $escolaridades = MilitarEscolaridade::select('escolaridades.nome', 'escolaridades.pontos', 'militar_escolaridades.instituicao_ensino','militar_escolaridades.id')->where('militar_id', $id)->join('escolaridades', 'escolaridades.id', '=', 'militar_escolaridades.escolaridade_id')->orderBy('escolaridades.pontos', 'desc')->get();
         return view('ficha_sipam.escolaridades.index', compact('escolaridades', 'militar'));
     }
 
@@ -30,6 +30,15 @@ class MilitarEscolaridadeController extends Controller
         $militar = Militar::find($id);
         $escolaridades = Escolaridade::all();
         return view('ficha_sipam.escolaridades.create', compact('escolaridades', 'militar'));
+    }
+
+    public function edit($id)
+    {
+        $user_auth = Auth::user();
+        $militar_escolaridade = MilitarEscolaridade::find($id);
+        $militar = Militar::find($militar_escolaridade->militar_id);
+        $escolaridades = Escolaridade::all();
+        return view('ficha_sipam.escolaridades.edit', compact('escolaridades', 'militar_escolaridade', 'militar'));
     }
 
     public function store(Request $request)
@@ -44,5 +53,31 @@ class MilitarEscolaridadeController extends Controller
 
         return redirect()->route('ficha_sipam.escolaridade_index', $request->input('militar_id'))
                         ->with('success','Escolaridade lançada com sucesso!');
+    }
+
+    public function update(Request $request, string $id)
+    {
+        $user_auth = Auth::user();
+        $this->validate($request, [
+            'escolaridade_id' => 'required',
+            'instituicao_ensino' => 'required'
+        ]);
+
+        $militar_escolaridade = MilitarEscolaridade::find($id);
+        $militar_escolaridade->escolaridade_id = $request->input('escolaridade_id');
+        $militar_escolaridade->instituicao_ensino = $request->input('instituicao_ensino');
+        $militar_escolaridade->save();
+        
+        return redirect()
+            ->route('ficha_sipam.escolaridade_index', $request->input('militar_id'))
+            ->with('success', 'Escolaridade atualizada com Sucesso!');
+    }
+
+    public function destroy($id)
+    {
+        $militar_escolaridade = MilitarEscolaridade::find($id);
+        $militar_escolaridade->delete();
+        return redirect()->route('ficha_sipam.escolaridade_index', $militar_escolaridade->militar_id)
+                        ->with('success','Escolaridade excluida com sucesso!');
     }
 }

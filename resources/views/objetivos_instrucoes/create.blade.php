@@ -31,17 +31,31 @@
         <div class="form-group row justify-content-center">
             <div class="col-2">
                 <strong>Matéria:</strong>
-                {!! Form::text('materia', null, array('placeholder' => 'Ex: 1.','class' => 'form-control col-3')) !!}
+                {!! Form::text('materia', null, array('placeholder' => 'Ex: 1.','class' => 'form-control col')) !!}
             </div>
 
             <div class="col-2">
                 <strong>Identificacao:</strong>
-                {!! Form::text('identificacao', null, array('placeholder' => 'Ex: B-101','class' => 'form-control col-3')) !!}
+                {!! Form::text('identificacao', null, array('placeholder' => 'Ex: B-101','class' => 'form-control col')) !!}
             </div>
 
             <div class="col-4">
                 <strong>Referência:</strong>
                 {!! Form::text('referencia', null, array('placeholder' => 'Ex: EB70-PP-11.011','class' => 'form-control')) !!}
+            </div>
+            
+            <div class="col-4">
+                <strong>Definir qual QM do Objetivo Individual:</strong>
+                <select name="qm_oii" class="form-select">
+                    <option value="50" selected>
+                        Instrução Individual de Qualificação
+                    </option>
+                    @foreach ($qms as $qm)
+                    <option value="{{$qm->id}}">
+                        {{$qm->qualificacao . ' - ' . $qm->descricao}}
+                    </option>
+                    @endforeach
+                </select>
             </div>
         </div>
     </div>
