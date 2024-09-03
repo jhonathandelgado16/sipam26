@@ -38,9 +38,10 @@ class CadernetaController extends Controller
         $observacoes = Observacao::where('militar_id', $militar_id)->orderBy('data', 'ASC')->get();
         $visitas_medicas = VisitaMedica::where('militar_id', $militar_id)->orderBy('data_visita', 'ASC')->get();
         $vacinas_aplicadas = VacinaAplicada::where('militar_id', $militar_id)->orderBy('data_aplicacao', 'ASC')->get();
-        $resultados_fiib = FichaIndividualBasica::select('objetivo_instrucao_id', 'padrao_minimo_atingido')->join('objetivo_instrucaos', 'objetivo_instrucaos.id', '=', 'ficha_individual_basicas.objetivo_instrucao_id')->where('militar_id', $militar_id)->orderByRaw('CONVERT(materia, SIGNED) asc')->orderBy('identificacao','asc')->get();
+        $resultados_fiib = FichaIndividualBasica::select('objetivo_instrucao_id', 'padrao_minimo_atingido')->join('objetivo_instrucaos', 'objetivo_instrucaos.id', '=', 'ficha_individual_basicas.objetivo_instrucao_id')->where('militar_id', $militar_id)->where('objetivo_instrucaos.dentro_da_fiib', '50')->orderByRaw('CONVERT(materia, SIGNED) asc')->orderBy('identificacao','asc')->get();
+        $resultados_fiiq = FichaIndividualBasica::select('objetivo_instrucao_id', 'padrao_minimo_atingido')->join('objetivo_instrucaos', 'objetivo_instrucaos.id', '=', 'ficha_individual_basicas.objetivo_instrucao_id')->where('militar_id', $militar_id)->where('objetivo_instrucaos.dentro_da_fiib', '!=' , '50')->orderByRaw('CONVERT(materia, SIGNED) asc')->orderBy('identificacao','asc')->get();
         $faat = $militar->getInformacoesFaat();
 
-        return view('caderneta.index', compact('fatos', 'observacoes', 'militar','visitas_medicas', 'vacinas_aplicadas', 'resultados_fiib', 'faat'));
+        return view('caderneta.index', compact('fatos', 'observacoes', 'militar','visitas_medicas', 'vacinas_aplicadas', 'resultados_fiib', 'resultados_fiiq', 'faat'));
     }
 }

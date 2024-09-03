@@ -104,6 +104,10 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('fiib/pdf/{id}', '\App\Http\Controllers\FichaInstrucaoIndividualBasicaController@pdf')->name('fiib.pdf');
     Route::get('fiib/pdf_su/{subunidade_id}', '\App\Http\Controllers\FichaInstrucaoIndividualBasicaController@pdfSu')->name('fiib.pdf_su');
 
+    Route::get('fiiq/preencher/{id}', '\App\Http\Controllers\FichaInstrucaoIndividualBasicaController@preencherFiiq')->name('fiiq.preencher');
+    Route::post('fiiq/preencher/{id}', '\App\Http\Controllers\FichaInstrucaoIndividualBasicaController@realizarPreenchimentoFiiq')->name('fiiq.realizar');
+    Route::get('fiiq/pdf/{id}', '\App\Http\Controllers\FichaInstrucaoIndividualBasicaController@pdfFiiq')->name('fiiq.pdf');
+
     Route::get('faat/preencher/{id}', '\App\Http\Controllers\FichaAvaliacaoAtributoController@preencher')->name('faat.preencher');
     Route::post('faat/preencher/{id}', '\App\Http\Controllers\FichaAvaliacaoAtributoController@realizarPreenchimento')->name('faat.realizar');
     Route::get('faat/pdf/{id}', '\App\Http\Controllers\FichaAvaliacaoAtributoController@pdf')->name('faat.pdf');
@@ -171,6 +175,8 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('cnh_militar/create/{militar_id}', '\App\Http\Controllers\CnhMilitarController@create')->name('cnh_militar.create');
     Route::post('cnh_militar', '\App\Http\Controllers\CnhMilitarController@store')->name('cnh_militar.store');
 
+    Route::get('relatorios/punicoes/{id}', '\App\Http\Controllers\RelatoriosController@viewPunicoes')->name('punicoes.view');
+    Route::get('relatorios/punicoes', '\App\Http\Controllers\RelatoriosController@indexPunicoes')->name('punicoes.index');
     Route::get('relatorios/faltas', '\App\Http\Controllers\RelatoriosController@index')->name('relatorios.faltas');
     Route::get('relatorios/pdf', '\App\Http\Controllers\RelatoriosController@pdf')->name('relatorios.pdf');
 

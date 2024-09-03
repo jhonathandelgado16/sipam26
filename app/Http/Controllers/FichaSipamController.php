@@ -41,6 +41,7 @@ class FichaSipamController extends Controller
 
         $avalicao_militar = AvaliacaoMilitar::where('militar_id', $militar->id)
             ->where('situacao', 2)
+            ->whereBetween('avaliacao_militars.created_at', [$data_inicio, $data_final])
             ->first();
 
             // dd($cursos);

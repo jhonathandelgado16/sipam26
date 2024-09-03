@@ -16,6 +16,9 @@
     <div class="row">
         <div class="col-lg-12 margin-tb">
             <div class="row">
+                <div class="row justify-content-end col-4">
+                        <a class="col-7 btn btn-primary" href="{{ route('punicoes.index') }}"> Relatório de Punições</a>
+                </div>
                 <div class="pull-left col-8">
                     <h2>Relatórios sobre faltas</h2>
                 </div>

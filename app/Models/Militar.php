@@ -43,7 +43,16 @@ class Militar extends Model
 
     public function possuiFiibPreenchida()
     {
-        $resultado = FichaIndividualBasica::where('militar_id', $this->id)->get();
+        $resultado = FichaIndividualBasica::join('objetivo_instrucaos', 'objetivo_instrucaos.id', '=', 'ficha_individual_basicas.objetivo_instrucao_id')->where('militar_id', $this->id)->where('objetivo_instrucaos.dentro_da_fiib', '50')->get();
+        if ($resultado->isNotEmpty()) {
+            return true;
+        }
+        return false;
+    }
+
+    public function possuiFiiqPreenchida()
+    {
+        $resultado = FichaIndividualBasica::join('objetivo_instrucaos', 'objetivo_instrucaos.id', '=', 'ficha_individual_basicas.objetivo_instrucao_id')->where('militar_id', $this->id)->where('objetivo_instrucaos.dentro_da_fiib', '!=', '50')->get();
         if ($resultado->isNotEmpty()) {
             return true;
         }
@@ -67,6 +76,18 @@ class Militar extends Model
         return FichaIndividualBasica::select('objetivo_instrucao_id', 'padrao_minimo_atingido', 'militar_id')
             ->join('objetivo_instrucaos', 'objetivo_instrucaos.id', '=', 'ficha_individual_basicas.objetivo_instrucao_id')
             ->where('militar_id', $this->id)
+            ->where('dentro_da_fiib', 50)
+            ->orderByRaw('CONVERT(materia, SIGNED) asc')
+            ->orderBy('identificacao', 'asc')
+            ->get();
+    }
+
+    public function getInformacoesFiiq()
+    {
+        return FichaIndividualBasica::select('objetivo_instrucao_id', 'padrao_minimo_atingido', 'militar_id')
+            ->join('objetivo_instrucaos', 'objetivo_instrucaos.id', '=', 'ficha_individual_basicas.objetivo_instrucao_id')
+            ->where('militar_id', $this->id)
+            ->where('dentro_da_fiib', $this->qualificacao_militar_id)
             ->orderByRaw('CONVERT(materia, SIGNED) asc')
             ->orderBy('identificacao', 'asc')
             ->get();
@@ -96,6 +117,7 @@ class Militar extends Model
 
         return Taf::where('militar_id', $this->id)
             ->whereBetween('created_at', [$data_inicio, $data_final])
+            ->groupBy('taf_numero_id')
             ->orderBy('created_at', 'desc')
             ->get();
     }
@@ -165,10 +187,11 @@ class Militar extends Model
                 break;      
         }
 
-        return Taf::select('taf_mencaos.pontos')
+        return Taf::select('taf_mencaos.pontos, taf_numero_id')
             ->where('militar_id', $this->id)
             ->whereBetween('tafs.created_at', [$data_inicio, $data_final])
             ->join('taf_mencaos', 'tafs.taf_mencao_id', 'taf_mencaos.id')
+            ->groupBy('taf_numero_id')
             ->orderBy('tafs.created_at', 'desc')
             ->sum('pontos');
     }
@@ -216,15 +239,28 @@ class Militar extends Model
 
     public function getPontosAtitude()
     {
+        switch (date('m')) {
+            case date('m') >= 3:
+                $data_inicio = date((date('Y')).'-03-01');
+                $data_final = date((date('Y')+1).'-03-01');
+                break;  
+            case date('m') <= 3:
+                $data_inicio = date((date('Y')-1).'-03-01');
+                $data_final = date((date('Y')).'-03-01');
+                break;      
+        }
+        
         if (
             AvaliacaoMilitar::where('militar_id', $this->id)
                 ->where('situacao', 2)
+                ->whereBetween('created_at', [$data_inicio, $data_final])
                 ->first() == null
         ) {
             return 0;
         }
         return AvaliacaoMilitar::where('militar_id', $this->id)
             ->where('situacao', 2)
+            ->whereBetween('created_at', [$data_inicio, $data_final])
             ->first()->nota_final;
     }
 
@@ -310,5 +346,30 @@ class Militar extends Model
             ->join('demeritos', 'militar_demeritos.demerito_id', 'demeritos.id')
             ->whereRaw('SUBSTRING_INDEX(publicacao, "/", -1) = YEAR(CURDATE())')
             ->sum('pontos_demerito');
+    }
+
+    public function getQuantidadeAdv(){
+        return MilitarDemerito::select('militar_id')->join('demeritos', 'demeritos.id', '=', 'militar_demeritos.demerito_id')->where('militar_id', $this->id)->
+        where('descricao', 'Advertência')->whereRaw('SUBSTRING_INDEX(publicacao, "/", -1) = YEAR(CURDATE())')->count();
+    }
+
+    public function getQuantidadeImp(){
+        return MilitarDemerito::select('militar_id')->join('demeritos', 'demeritos.id', '=', 'militar_demeritos.demerito_id')->where('militar_id', $this->id)->
+        where('descricao', 'Impedimento Disciplinar')->whereRaw('SUBSTRING_INDEX(publicacao, "/", -1) = YEAR(CURDATE())')->count();
+    }
+
+    public function getQuantidadeRep(){
+        return MilitarDemerito::select('militar_id')->join('demeritos', 'demeritos.id', '=', 'militar_demeritos.demerito_id')->where('militar_id', $this->id)->
+        where('descricao', 'Repreensão')->whereRaw('SUBSTRING_INDEX(publicacao, "/", -1) = YEAR(CURDATE())')->count();
+    }
+
+    public function getQuantidadeDet(){
+        return MilitarDemerito::select('militar_id')->join('demeritos', 'demeritos.id', '=', 'militar_demeritos.demerito_id')->where('militar_id', $this->id)->
+        where('descricao', 'Detenção Disciplinar')->whereRaw('SUBSTRING_INDEX(publicacao, "/", -1) = YEAR(CURDATE())')->count();
+    }
+
+    public function getQuantidadePrisao(){
+        return MilitarDemerito::select('militar_id')->join('demeritos', 'demeritos.id', '=', 'militar_demeritos.demerito_id')->where('militar_id', $this->id)->
+        where('descricao', 'Prisão Disciplinar')->whereRaw('SUBSTRING_INDEX(publicacao, "/", -1) = YEAR(CURDATE())')->count();
     }
 }

@@ -86,6 +86,7 @@ class TafController extends Controller
             $militares = Militar::select('militars.id', 'numero', 'nome_de_guerra', 'posto_id', 'antiguidade')
                 ->join('postos', 'militars.posto_id', '=', 'postos.id')
                 ->orderBy('antiguidade', 'ASC')
+                ->where('situacao', 'ativa')
                 ->orderBy('numero', 'ASC')
                 ->get();
         } else {
@@ -94,6 +95,7 @@ class TafController extends Controller
                 ->orderBy('antiguidade', 'ASC')
                 ->orderBy('numero')
                 ->where('subunidade_id', $user->subunidade_id)
+                ->where('situacao', 'ativa')
                 ->get();
         }
 

@@ -4,10 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\Militar;
 use App\Models\MilitarCurso;
+use App\Models\MilitarDemerito;
 use App\Models\Ranking;
 use App\Models\Relatorios;
 use App\Models\Subunidade;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 use PDF;
 
 class RelatoriosController extends Controller
@@ -21,15 +24,14 @@ class RelatoriosController extends Controller
     {
         switch (date('m')) {
             case date('m') >= 3:
-                $data_inicio = date((date('Y')).'-03-01');
-                $data_final = date((date('Y')+1).'-03-01');
-                break;  
+                $data_inicio = date(date('Y') . '-03-01');
+                $data_final = date(date('Y') + 1 . '-03-01');
+                break;
             case date('m') <= 3:
-                $data_inicio = date((date('Y')-1).'-03-01');
-                $data_final = date((date('Y')).'-03-01');
-                break;      
+                $data_inicio = date(date('Y') - 1 . '-03-01');
+                $data_final = date(date('Y') . '-03-01');
+                break;
         }
-       
 
         switch ($request->input('filtro')) {
             case 'escolaridade':
@@ -70,7 +72,7 @@ class RelatoriosController extends Controller
                 break;
         }
 
-        $filtros = [['id' => 'curso reengajamento', 'descricao' => 'Curso para reengajamento'], ['id' => 'escolaridade', 'descricao' => 'Escolaridades'], ['id' => 'taf', 'descricao' => 'Testes de Aptidão Física'], ['id' => 'avaliacao', 'descricao' => 'Avaliação de Conceito'],];
+        $filtros = [['id' => 'curso reengajamento', 'descricao' => 'Curso para reengajamento'], ['id' => 'escolaridade', 'descricao' => 'Escolaridades'], ['id' => 'taf', 'descricao' => 'Testes de Aptidão Física'], ['id' => 'avaliacao', 'descricao' => 'Avaliação de Conceito']];
         return view('relatorios.faltas', compact('filtros', 'filtro_selecionado', 'militares_sem', 'militares_com', 'qtd_militares_com', 'qtd_militares_sem'));
     }
 
@@ -85,5 +87,29 @@ class RelatoriosController extends Controller
         // return $pdf->stream('ficha acompanhamento.pdf');
 
         return view('relatorios.pdf.curso_engajamento', compact('resultado', 'subunidades'));
+    }
+
+    public function indexPunicoes(Request $request)
+    {
+        $search = '';
+        $search_su = '';
+        $subunidades = Subunidade::all();
+        $user_auth = Auth::user();
+        $user = User::findOrFail($user_auth->id);
+
+        $militares = Militar::select('militars.id', 'numero', 'nome_de_guerra', 'posto_id', 'antiguidade')->join('postos', 'militars.posto_id', '=', 'postos.id')->whereIn('militars.id', MilitarDemerito::select('militar_id')
+        ->whereRaw('SUBSTRING_INDEX(publicacao, "/", -1) = YEAR(CURDATE())')->groupBy('militar_id')->get()->toArray())->orderBy('antiguidade', 'ASC')->orderBy('numero', 'ASC');
+
+        $militares = $militares->where('situacao', 'ativa')->get();
+
+        return view('relatorios.demeritos.index', compact('user_auth', 'militares', 'subunidades', 'search', 'search_su'));
+    }
+
+    public function viewPunicoes($id)
+    {
+        $user_auth = Auth::user();
+        $militar = Militar::find($id);
+        $demeritos = MilitarDemerito::where('militar_id', $id)->get();
+        return view('relatorios.demeritos.view', compact('demeritos', 'militar'));
     }
 }

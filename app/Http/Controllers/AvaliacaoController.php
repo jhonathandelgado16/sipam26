@@ -23,6 +23,17 @@ class AvaliacaoController extends Controller
         $user_auth = Auth::user();
         $user = User::findOrFail($user_auth->id);
 
+        switch (date('m')) {
+            case date('m') >= 3:
+                $data_inicio = date((date('Y')).'-03-01');
+                $data_final = date((date('Y')+1).'-03-01');
+                break;  
+            case date('m') <= 3:
+                $data_inicio = date((date('Y')-1).'-03-01');
+                $data_final = date((date('Y')).'-03-01');
+                break;      
+        }
+
         $militares_sem_avaliacao = Militar::Select('militars.id', 'numero', 'nome_de_guerra', 'posto_id', 'antiguidade')
             ->join('postos', 'militars.posto_id', '=', 'postos.id')
             ->orderBy('antiguidade', 'ASC')
@@ -43,6 +54,7 @@ class AvaliacaoController extends Controller
             ->whereNotIn(
                 'militars.id',
                 AvaliacaoMilitar::select('militar_id')
+                    ->whereBetween('avaliacao_militars.created_at', [$data_inicio, $data_final])
                     ->get()
                     ->toArray(),
             )
@@ -62,6 +74,7 @@ class AvaliacaoController extends Controller
                     ->get()
                     ->toArray(),
             )
+            ->whereBetween('avaliacao_militars.created_at', [$data_inicio, $data_final])
             ->where('avaliacao_militars.situacao', 1)
             ->get();
 
@@ -79,6 +92,7 @@ class AvaliacaoController extends Controller
                     ->get()
                     ->toArray(),
             )
+            ->whereBetween('avaliacao_militars.created_at', [$data_inicio, $data_final])
             ->where('avaliacao_militars.situacao', 2)
             ->get();
 
