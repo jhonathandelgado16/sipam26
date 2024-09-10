@@ -58,6 +58,7 @@ class AvaliacaoController extends Controller
                     ->get()
                     ->toArray(),
             )
+            ->where('situacao', 'ativa')
             ->get();
 
         $militares_com_avaliacao = AvaliacaoMilitar::join('militars', 'avaliacao_militars.militar_id', '=', 'militars.id')
@@ -76,6 +77,7 @@ class AvaliacaoController extends Controller
             )
             ->whereBetween('avaliacao_militars.created_at', [$data_inicio, $data_final])
             ->where('avaliacao_militars.situacao', 1)
+            ->where('militars.situacao', 'ativa')
             ->get();
 
         $militares_avaliacao_aprovada = AvaliacaoMilitar::join('militars', 'avaliacao_militars.militar_id', '=', 'militars.id')
@@ -94,6 +96,7 @@ class AvaliacaoController extends Controller
             )
             ->whereBetween('avaliacao_militars.created_at', [$data_inicio, $data_final])
             ->where('avaliacao_militars.situacao', 2)
+            ->where('militars.situacao', 'ativa')
             ->get();
 
         return view('avaliacoes.index', compact('militares_sem_avaliacao', 'militares_com_avaliacao', 'militares_avaliacao_aprovada'));

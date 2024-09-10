@@ -24,7 +24,7 @@ class MilitaresFracaoController extends Controller
     public function relacionarMilitar($id){
         $fracao = Fracao::find($id);
         $militares_fracao = MilitaresFracao::where('fracao_id', $id)->get();
-        $militares = Militar::Select('militars.id', 'numero', 'nome_de_guerra', 'posto_id', 'antiguidade')->join('postos', 'militars.posto_id', '=', 'postos.id')->
+        $militares = Militar::Select('militars.id', 'numero', 'nome_de_guerra', 'posto_id', 'antiguidade')->join('postos', 'militars.posto_id', '=', 'postos.id')->where('situacao', 'ativa')->
         orderBy('antiguidade', 'ASC')->orderBy('numero')->whereNotIn('militars.id', MilitaresFracao::select('militar_id')->where('fracao_id', $id)->get()->toArray())->get();
         return view('militares_fracoes.inserir',compact('militares_fracao', 'militares','fracao'));
     }
