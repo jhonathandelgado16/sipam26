@@ -2,18 +2,9 @@
 
 @section('content')
     <div class="grid-container">
-        <div class="grid-item-1">
-            <table class="footer-table">
-                <tr>
-                    <td>
-                        _____________________________
-                        <br>
-                        Visto do Cmt SU
-                    </td>
-                </tr>
-            </table>
-            <br>
 
+        <div class="grid-item-1">
+            
             <h3 class="text-center h3-ficha">FICHA DE ACOMPANHAMENTO DE MILITAR</h3>
             <table class="table-acompanhamento">
                 <tbody>
@@ -141,71 +132,7 @@
             </table>
         </div>
         <div class="grid-item-2">
-
-            <h3 class="text-center h3-ficha">INFORMAÇÕES DA ENTREVISTA</h3>
-            <table class="table-acompanhamento">
-                <tbody>
-                    <tr>
-                        <td><b>Possui irmãos?</b> </td>
-                        <td class="text-align-right">
-                            @if ($ficha_acompanhamento->qtd_irmaos != null)
-                                Sim
-                            @else
-                                Não possui
-                            @endif
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><b>Quantos?</b> </td>
-                        <td class="text-align-right">
-                            @if ($ficha_acompanhamento->qtd_irmaos != null)
-                                {{ $ficha_acompanhamento->qtd_irmaos }}
-                            @else
-                                
-                            @endif
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <table class="table-acompanhamento">
-                <tbody>
-                    <tr>
-                        <td><b>Renda familiar média (R$):</b> </td>
-                        <td class="text-align-right">
-                            {{ str_replace(".", ",", $ficha_acompanhamento->renda_familiar)  }}
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <table class="table-acompanhamento">
-                <tbody>
-                    <tr>
-                        <td><b>O que faz nas horas de lazer?</b> </td>
-                    </tr>
-                    <tr>
-                        <td class="text-align-right">
-                            {{ $ficha_acompanhamento->lazer }}
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <table class="table-acompanhamento">
-                <tbody>
-                    <tr>
-                        <td><b>Quais os objetivos de vida?</b> </td>
-                    </tr>
-                    <tr>
-                        <td class="text-align-right">
-                            {{ $ficha_acompanhamento->objetivo_de_vida }}
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-
-            {{-- <table class="table-palestras">
+            <table class="table-palestras">
                 <tbody>
                     <tr>
                         <td colspan="7"><b>Assistiu à Palestra de Prevenção de Acidentes nas Atividades Militares?</b>
@@ -262,29 +189,7 @@
                             @else
                                 <div class="uncheck"></div>
                             @endif
-                        </td> <div class="grid-item-2">
-                <table class="table-palestras">
-                    <tbody>
-                        <tr>
-                            <td colspan="2"><b>Observações/Providências:</b></td>
-                        </tr>
-                        @for ($i = 0; $i<10; $i++)
-                        <tr>
-                            <td colspan="2">_________________________________________________________________</td>
-                        </tr>
-                        @endfor
-                        <tr>
-    
-                        </tr>
-                        <br>
-                        <tr>
-                            <td colspan="2" class=" text-right">
-                                Visto do Cmt Fração: _____________________________
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+                        </td> 
                         <td class="td-15 text-left"> Sim</td>
 
                         <td class="td-5">
@@ -437,7 +342,7 @@
                     </tr>
                 </tbody>
             </table>
-            <br> --}}
+            <br>
 
             <table class="table-palestras">
                 <tbody>
@@ -463,36 +368,9 @@
                 </tbody>
             </table>
             <br>
-
-                <table class="table-palestras">
-                    <tbody>
-                        <tr>
-                            <td colspan="2"><b>Observações/Providências:</b></td>
-                        </tr>
-                        @for ($i = 0; $i<8; $i++)
-                        <tr>
-                            <td colspan="2">_________________________________________________________________</td>
-                        </tr>
-                        @endfor
-                        <tr>
-    
-                        </tr>
-                        <br>
-                    </tbody>
-                </table>
-
-                <table class="footer-table">
-                    <tr>
-                        <td>
-                            _____________________________
-                            <br>
-                            Visto do Cmt SU
-                        </td>
-                    </tr>
-                </table>
         </div>
     </div>
-    {{-- <div class="page_break"></div>
+    <div class="page_break"></div>
     <div class="grid-container">
         <div class="grid-item-1">
             @if (!$carros->isEmpty())
@@ -868,12 +746,75 @@
             </table>
         </div>
         <div class="grid-item-2">
+            <h3 class="text-center h3-ficha">INFORMAÇÕES DA ENTREVISTA</h3>
+            <table class="table-acompanhamento">
+                <tbody>
+                    <tr>
+                        <td><b>Possui irmãos?</b> </td>
+                        <td class="text-align-right">
+                            @if ($ficha_acompanhamento->qtd_irmaos != null)
+                                Sim
+                            @else
+                                Não possui
+                            @endif
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Quantos?</b> </td>
+                        <td class="text-align-right">
+                            @if ($ficha_acompanhamento->qtd_irmaos != null)
+                                {{ $ficha_acompanhamento->qtd_irmaos }}
+                            @else
+                                
+                            @endif
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <table class="table-acompanhamento">
+                <tbody>
+                    <tr>
+                        <td><b>Renda familiar média (R$):</b> </td>
+                        <td class="text-align-right">
+                            {{ str_replace(".", ",", $ficha_acompanhamento->renda_familiar)  }}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <table class="table-acompanhamento">
+                <tbody>
+                    <tr>
+                        <td><b>O que faz nas horas de lazer?</b> </td>
+                    </tr>
+                    <tr>
+                        <td class="text-align-right">
+                            {{ $ficha_acompanhamento->lazer }}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <table class="table-acompanhamento">
+                <tbody>
+                    <tr>
+                        <td><b>Quais os objetivos de vida?</b> </td>
+                    </tr>
+                    <tr>
+                        <td class="text-align-right">
+                            {{ $ficha_acompanhamento->objetivo_de_vida }}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
             <table class="table-palestras">
                 <tbody>
                     <tr>
                         <td colspan="2"><b>Observações/Providências:</b></td>
                     </tr>
-                    @for ($i = 0; $i<30; $i++)
+                    @for ($i = 0; $i<8; $i++)
                     <tr>
                         <td colspan="2">_________________________________________________________________</td>
                     </tr>
@@ -881,8 +822,19 @@
                     <tr>
 
                     </tr>
+                    <br>
                 </tbody>
             </table>
+
+            <table class="footer-table">
+                <tr>
+                    <td>
+                        _____________________________
+                        <br>
+                        Visto do Cmt SU
+                    </td>
+                </tr>
+            </table>
         </div>
-    </div> --}}
+    </div>
 @endsection

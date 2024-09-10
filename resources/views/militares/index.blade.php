@@ -73,14 +73,14 @@
                                     src="{{ url('storage/icons/edit.png') }}" height="20"> Editar</a>
                             <a class="btn btn-white" href="{{ route('ficha_sipam.index', $militar->id) }}"><img
                                     src="{{ url('storage/icons/SIPAM26.png') }}" height="20"> Ficha SIPAM</a>
-                            <a class="btn btn-red" href="{{ route('ficha_acompanhamentos.index', $militar->id) }}"><ion-icon
-                                    name="people"></ion-icon> Ficha de Acompanhamento</a>
                             <a class="btn btn-white" target="_blank" href="{{ route('desmobilizacao.curriculo', $militar->id) }}"><ion-icon
                                     name="newspaper"></ion-icon> Curriculo</a>
                         @endcan
                         @can('militar-caderneta')
                             <a class="btn btn-green" href="{{ route('caderneta.ficha', $militar->id) }}"><img
                                     src="{{ url('storage/icons/caderneta.png') }}" height="20"> Caderneta</a>
+                                    <a class="btn btn-red" href="{{ route('ficha_acompanhamentos.index', $militar->id) }}"><ion-icon
+                                            name="people"></ion-icon> Ficha de Acompanhamento</a>
                         @endcan
                     </td>
                 </tr>

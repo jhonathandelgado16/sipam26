@@ -15,7 +15,7 @@ class FichaAcompanhamentoController extends Controller
     //
     function __construct()
     {
-        $this->middleware('permission:militar-edit', ['only' => ['index', 'store', 'create', 'edit', 'pdf']]);
+        $this->middleware('permission:militar-edit|militar-caderneta', ['only' => ['index', 'store', 'create', 'edit', 'pdf']]);
     }
 
     public function index($id)

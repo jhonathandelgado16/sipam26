@@ -192,7 +192,7 @@
             </div>
         </div>
 
-        <div class="col-12 d-none">
+        <div class="col-12">
             <div class="row justify-content-center">
                 <div class="col-12 row margin-bottom-5 justify-content-center no-margin">
                     <div class="row subtitle-acompanhamento">
@@ -479,7 +479,7 @@
             </div>
         </div>
 
-        <div class="col-6 d-none">
+        <div class="col-12">
             <div class="row">
                 <div class="col-12 row margin-bottom-5 justify-content-center no-margin">
                     <div class="row subtitle-acompanhamento">
